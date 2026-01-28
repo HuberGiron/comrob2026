@@ -19,8 +19,8 @@
             <nav class="navbar navbar-expand-lg">
                 <div class="container px-5">
                     
-                    <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="assets/Comrob_logo.png" alt="COMROB" height="60">
+                    <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <img src="assets/Comrob_logo.png" alt="COMROB" height="80">
                     </a>
 
                     <button class="navbar-toggler" type="button"
@@ -31,193 +31,413 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
-                        </li>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                            <li class="nav-item">
+                            <a class="nav-link fs-5" href="index.html">Inicio</a>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"
-                            id="navbarDropdownBlog" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Call for papers
-                        </a>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link fs-5 dropdown-toggle" href="call-for-papers.html"
+                                id="navbarDropdownBlog" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Call for papers
+                            </a>
 
-                        <!-- Alinea “end” solo en pantallas grandes -->
-                        <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownBlog">
-                            <li><a class="dropdown-item" href="#">Información Autores</a></li>
+                            <!-- Alinea “end” solo en pantallas grandes -->
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownBlog">
+                                <li><a class="dropdown-item fs-5" href="call-for-papers.html">Convocatoria</a></li>
+                                <li><a class="dropdown-item fs-5" href="info-autores.html">Información Autores</a></li>
+                            </ul>
+                            </li>
                         </ul>
-                        </li>
-                    </ul>
                     </div>
-
                 </div>
             </nav>
 
-            <!-- Header-->
-            <header class="bg-dark py-5">
-                <div class="container px-5">
-                    <div class="row gx-5 align-items-center justify-content-center">
-                        <div class="col-lg-8 col-xl-7 col-xxl-6">
-                            <div class="my-5 text-center text-xl-start">
-                                <h1 class="display-5 fw-bolder text-white mb-2">A Bootstrap 5 template for modern businesses</h1>
-                                <p class="lead fw-normal text-white-50 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit!</p>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                                    <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+            <!-- HERO / PORTADA -->
+            <header class="position-relative text-white">
+            <!-- Cambia la imagen de fondo por una tuya -->
+            <div class="position-absolute top-0 start-0 w-100 h-100"
+                style="background: url('assets/hero-comrob-cdmx.jpg') center/cover no-repeat;">
+            </div>
+
+            <!-- Overlay para legibilidad -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: .55;"></div>
+
+            <div class="container px-4 py-5 position-relative" style="min-height: 70vh;">
+                <div class="row align-items-center justify-content-center text-center h-100">
+                <div class="col-lg-10">
+                    <p class="display-5 mb-3">XXVIII Congreso Mexicano de Robótica</p>
+                    <h1 class="display-3 fw-bold mb-4">COMRob 2026</h1>
+                    <p class=" lead mb-4">
+                    Ciudad de México · Universidad Iberoamericana · 26–28 de octubre de 2026
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <a class="btn btn-danger btn-lg" href="call-for-papers.html">Call for Papers</a>
+                    <a class="btn btn-outline-light btn-lg" href="#important-dates">Fechas importantes</a>
+                    <a class="btn btn-outline-light btn-lg" href="#topics">Temas</a>
+                    <a class="btn btn-outline-light btn-lg" href="#chairs">Organización</a>
                     </div>
                 </div>
-            </header>
-            <!-- Features section-->
-            <section class="py-5" id="features">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start building.</h2></div>
-                        <div class="col-lg-8">
-                            <div class="row gx-5 row-cols-1 row-cols-md-2">
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 mb-md-0 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Testimonial section-->
-            <div class="py-5 bg-light">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-10 col-xl-7">
-                            <div class="text-center">
-                                <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="fw-bold">
-                                        Tom Ato
-                                        <span class="fw-bold text-primary mx-1">/</span>
-                                        CEO, Pomodoro
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <!-- Blog preview section-->
-            <section class="py-5">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-8 col-xl-6">
-                            <div class="text-center">
-                                <h2 class="fw-bolder">From our blog</h2>
-                                <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
-                            </div>
-                        </div>
+            </header>
+
+
+            <!-- COUNTDOWN -->
+            <section class="bg-secondary text-white">
+            <div class="container px-4 py-3 text-center">
+                <div class="row g-3 justify-content-center">
+                <div class="col-6 col-lg-3">
+                    <div class="bg-white text-danger rounded-3 py-4 shadow-sm">
+                    <div id="cd-days" class="display-6 fw-bold">--</div>
+                    <div class="text-uppercase small fw-semibold">Días</div>
                     </div>
-                    <div class="row gx-5">
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
-                                    <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                            <div class="small">
-                                                <div class="fw-bold">Kelly Rowan</div>
-                                                <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                                    <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                            <div class="small">
-                                                <div class="fw-bold">Josiah Barclay</div>
-                                                <div class="text-muted">March 23, 2023 &middot; 4 min read</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                                    <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                            <div class="small">
-                                                <div class="fw-bold">Evelyn Martinez</div>
-                                                <div class="text-muted">April 2, 2023 &middot; 10 min read</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Call to action-->
-                    <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
-                        <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
-                            <div class="mb-4 mb-xl-0">
-                                <div class="fs-3 fw-bold text-white">New products, delivered to you.</div>
-                                <div class="text-white-50">Sign up for our newsletter for the latest updates.</div>
-                            </div>
-                            <div class="ms-xl-4">
-                                <div class="input-group mb-2">
-                                    <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter" />
-                                    <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
-                                </div>
-                                <div class="small text-white-50">We care about privacy, and will never share your data.</div>
-                            </div>
-                        </div>
-                    </aside>
                 </div>
+                <div class="col-6 col-lg-3">
+                    <div class="bg-white text-danger rounded-3 py-4 shadow-sm">
+                    <div id="cd-hours" class="display-6 fw-bold">--</div>
+                    <div class="text-uppercase small fw-semibold">Horas</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="bg-white text-danger rounded-3 py-4 shadow-sm">
+                    <div id="cd-minutes" class="display-6 fw-bold">--</div>
+                    <div class="text-uppercase small fw-semibold">Minutos</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="bg-white text-danger rounded-3 py-4 shadow-sm">
+                    <div id="cd-seconds" class="display-6 fw-bold">--</div>
+                    <div class="text-uppercase small fw-semibold">Segundos</div>
+                    </div>
+                </div>
+                </div>
+            </div>
             </section>
+
+
+            <!-- ABOUT / DESCRIPCIÓN -->
+            <section class="bg-light" id="about">
+            <div class="container px-4 py-5">
+                <div class="row gx-4 align-items-center justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <h2 class="mb-3">¿Qué es COMRob 2026?</h2>
+
+            <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-lg-5">
+
+                <p class="mb-3">
+                La Asociación Mexicana de Robótica (AMRob) es una de las comunidades de investigación que contribuye y promueve
+                la difusión del conocimiento en el área de la robótica tanto en el enfoque clásico como en el moderno,
+                involucrando también a las distintas áreas afines que son desarrolladas en la actualidad, teniendo un impacto en
+                la formación de estudiantes y profesionistas, así como en el impulso de las nuevas tecnologías en México y
+                Latinoamérica durante más de 28 años.
+                </p>
+
+                <p class="mb-3">
+                Durante todo este tiempo la AMRob ha sido considerada un pilar para el crecimiento académico y profesional,
+                ya que sus principales objetivos son:
+                </p>
+
+                <ul class="mb-4">
+                <li>Promover a la robótica en sus aspectos educativos, de investigación, desarrollo tecnológico y aplicaciones industriales.</li>
+                <li>Difundir avances y resultados de investigación y desarrollo en robótica.</li>
+                <li>Servir de enlace entre los miembros de la comunidad interesada en la robótica.</li>
+                <li>Promover la vinculación entre la academia y el sector productivo.</li>
+                </ul>
+
+                <p class="mb-0">
+                Con la finalidad de cumplir con estos objetivos, cada año se organiza el Congreso Mexicano de Robótica (COMRob),
+                en donde se dan cita estudiantes, investigadores y profesionistas de las diferentes ramas de la robótica,
+                de la comunidad nacional e internacional, compartiendo sus avances y resultados de las investigaciones
+                en que se encuentran trabajando actualmente en sus instituciones de adscripción.
+                </p>
+
+            </div>
+            </div>
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                    <a class="btn btn-outline-danger href="call-for-papers.html">Enviar artículo</a>
+                    <a class="btn btn-outline-secondary" href="info-autores.html">Información para autores</a>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            </section>
+
+
+            <!-- IMPORTANT DATES -->
+            <section class="bg-white" id="important-dates">
+            <div class="container px-4 py-5">
+                <div class="row gx-4 justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <h2 class="mb-4">Fechas importantes</h2>
+
+                    <div class="list-group shadow-sm">
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                        <div class="fw-semibold">Inicio de recepción de artículos</div>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">02 mar 2026</span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                        <div class="fw-semibold">Límite de envío</div>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">21 jun 2026</span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                        <div class="fw-semibold">Notificación de aceptación</div>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">28 ago 2026</span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                        <div class="fw-semibold">Versión final / Camera-ready</div>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">25 sep 2026</span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                        <div class="fw-semibold">Congreso</div>
+                        <div class="text-muted small">COMRob 2026 (Ciudad de México)</div>
+                        </div>
+                        <span class="badge bg-dark rounded-pill">26–28 oct 2026</span>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            </section>
+
+
+            <!-- TOPICS -->
+            <section class="bg-light" id="topics">
+            <div class="container px-4 py-5">
+                <div class="row gx-4 justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <h2 class="mb-3">Temas del congreso</h2>
+                    <p class="text-muted mb-4">
+                    Los temas de interés incluyen (pero no se limitan a):
+                    </p>
+
+                    <div class="accordion shadow-sm" id="topicsAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="t1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c1" aria-expanded="true" aria-controls="c1">
+                            1) Control y Modelado de Sistemas Robóticos
+                        </button>
+                        </h2>
+                        <div id="c1" class="accordion-collapse collapse" aria-labelledby="t1" data-bs-parent="#topicsAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                            <li>Control lineal y no lineal</li>
+                            <li>Control adaptativo</li>
+                            <li>Control difuso</li>
+                            <li>Control de impedancia</li>
+                            <li>Modelado cinemático</li>
+                            <li>Modelado dinámico</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="t2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2" aria-expanded="false" aria-controls="c2">
+                            2) Robótica Móvil, Autónoma y de Campo
+                        </button>
+                        </h2>
+                        <div id="c2" class="accordion-collapse collapse" aria-labelledby="t2" data-bs-parent="#topicsAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                            <li>Robótica móvil</li>
+                            <li>Robots autónomos</li>
+                            <li>Robots uniciclo</li>
+                            <li>Robots hexápodos</li>
+                            <li>Teleoperación de robots</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="t3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3" aria-expanded="false" aria-controls="c3">
+                            3) Plataformas y Diseño de Robots
+                        </button>
+                        </h2>
+                        <div id="c3" class="accordion-collapse collapse" aria-labelledby="t3" data-bs-parent="#topicsAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                            <li>Diseño de robots</li>
+                            <li>Robótica suave</li>
+                            <li>Robótica humanoide</li>
+                            <li>Robots colaborativos</li>
+                            <li>Plataformas paralelas</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="t4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4" aria-expanded="false" aria-controls="c4">
+                            4) Robótica Aplicada
+                        </button>
+                        </h2>
+                        <div id="c4" class="accordion-collapse collapse" aria-labelledby="t4" data-bs-parent="#topicsAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                            <li>Robótica médica</li>
+                            <li>Robótica educativa</li>
+                            <li>Robótica de competencia</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="t5">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5" aria-expanded="false" aria-controls="c5">
+                            5) Percepción, Inteligencia e Interacción Humano-Robot
+                        </button>
+                        </h2>
+                        <div id="c5" class="accordion-collapse collapse" aria-labelledby="t5" data-bs-parent="#topicsAccordion">
+                        <div class="accordion-body">
+                            <ul class="mb-0">
+                            <li>Inteligencia artificial aplicada a la robótica</li>
+                            <li>Visión por computador</li>
+                            <li>Interfaces hápticas</li>
+                            <li>Realidad virtual</li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                    <div class="mt-4">
+                    <a class="btn btn-outline-danger" href="call-for-papers.html">Ver convocatoria completa</a>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            </section>
+
+
+            <!-- ORGANIZERS + SPONSORS -->
+            <section class="bg-white" id="organizers">
+            <div class="container px-4 py-5">
+                <div class="row gx-4 justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+
+                    <h2 class="mb-3">Organizadores</h2>
+                    <div class="row g-4 align-items-center text-center justify-content-center">
+                    <div class="col-6 col-md-4">
+                        <img src="assets/amrob.jpg" alt="AMRob" class="img-fluid" style="max-height:100px;">
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <img src="assets/logotipo-IBERO-cdmx.png" alt="IBERO" class="img-fluid" style="max-height:80px;">
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <img src="assets/eafit.jpg" alt="DEII" class="img-fluid" style="max-height:70px;">
+                    </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <h2 class="mb-3" id="sponsors">Nuestros Patrocinadores</h2>
+
+                    <!-- Aquí: justify-content-center centra las columnas -->
+                    <div class="row g-4 align-items-center text-center justify-content-center">
+                    <div class="col-6 col-md-3">
+                        <img src="assets/img/sponsors/sponsor-1.png" alt="Sponsor 1" class="img-fluid" style="max-height:60px;">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <img src="assets/img/sponsors/sponsor-2.png" alt="Sponsor 2" class="img-fluid" style="max-height:60px;">
+                    </div>
+                    </div>
+
+                    <!-- Aquí: text-center centra el botón -->
+                    <div class="mt-4 text-center">
+                    <a class="btn btn-danger" href="patrocinadores.html">Quiero patrocinar</a>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            </section>
+            
+            <!-- CHAIRS / COMITÉ -->
+            <section class="bg-light" id="chairs">
+            <div class="container px-4 py-5">
+                <div class="row gx-4 justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+
+                    <h2 class="mb-4">Comité Organizador</h2>
+
+                    <div class="row g-4">
+
+                    <!-- Chair 1 -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="assets/camilo.jpeg"
+                                alt="Mtro. Juan Camilo Tejada Orjuela"
+                                class="rounded-circle mb-3"
+                                style="width:120px;height:120px;object-fit:cover;">
+                            <h5 class="fw-bold mb-1">Mtro. Juan Camilo Tejada Orjuela</h5>
+                            <div class="text-muted small mb-3">Presidente del Congreso · COMRob 2026</div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Chair 2 -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="assets/img/people/guillermo-fernandez.jpg"
+                                alt="Dr. Guillermo Fernández Anaya"
+                                class="rounded-circle mb-3"
+                                style="width:120px;height:120px;object-fit:cover;">
+                            <h5 class="fw-bold mb-1">Dr. Guillermo Fernández Anaya</h5>
+                            <div class="text-muted small mb-3">Presidente del Comité Científico · COMRob 2026</div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Chair 3 -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="assets/img/people/alejandro-dzul.jpg"
+                                alt="Dr. Alejandro Enrique Dzul López"
+                                class="rounded-circle mb-3"
+                                style="width:120px;height:120px;object-fit:cover;">
+                            <h5 class="fw-bold mb-1">Dr. Alejandro Enrique Dzul López</h5>
+                            <div class="text-muted small mb-3">Presidente AMRob · 2023–2026</div>
+                        </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            </section>
+   
         </main>
         <!-- Footer-->
         <footer class="bg-danger mt-auto">
@@ -252,5 +472,35 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+        // Countdown al inicio del congreso (26 Oct 2026 00:00:00 hora local)
+        const target = new Date(2026, 9, 26, 0, 0, 0).getTime(); // Mes 9 = octubre (0-index)
+
+        function pad(n){ return String(n).padStart(2,'0'); }
+
+        function tick(){
+            const now = Date.now();
+            let diff = Math.max(0, target - now);
+
+            const d = Math.floor(diff / (1000*60*60*24));
+            diff -= d * (1000*60*60*24);
+
+            const h = Math.floor(diff / (1000*60*60));
+            diff -= h * (1000*60*60);
+
+            const m = Math.floor(diff / (1000*60));
+            diff -= m * (1000*60);
+
+            const s = Math.floor(diff / 1000);
+
+            document.getElementById('cd-days').textContent = d;
+            document.getElementById('cd-hours').textContent = pad(h);
+            document.getElementById('cd-minutes').textContent = pad(m);
+            document.getElementById('cd-seconds').textContent = pad(s);
+        }
+
+        tick();
+        setInterval(tick, 1000);
+        </script>
     </body>
 </html>
