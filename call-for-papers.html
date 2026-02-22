@@ -15,59 +15,68 @@
     </head>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
-            <!-- Navigation-->
+                        <!-- Navigation-->
             <nav class="navbar navbar-expand-lg">
-                <div class="container px-5">
-                    
-                    <a class="navbar-brand d-flex align-items-center" href="./">
-                    <img src="assets/Comrob_logo.png" alt="COMROB" height="80">
+            <div class="container px-5">
+
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="./">
+                <img src="assets/Comrob_logo.png" alt="COMROB" height="80">
+                </a>
+
+                <!-- Menú colapsable -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                    <a class="nav-link fs-5" href="./">Inicio</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                    <a class="nav-link fs-5 dropdown-toggle" href="call-for-papers.html"
+                        id="navbarDropdownCfp" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Call for papers
                     </a>
-
-                    <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                        <li class="nav-item">
-                        <a class="nav-link fs-5" href="./">Inicio</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link fs-5 dropdown-toggle" href="call-for-papers.html"
-                                id="navbarDropdownBlog" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Call for papers
-                            </a>
-
-                            <!-- Alinea “end” solo en pantallas grandes -->
-                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownBlog">
-                                <li><a class="dropdown-item fs-5" href="call-for-papers.html">Convocatoria</a></li>
-                                <li><a class="dropdown-item fs-5" href="info-autores.html">Información Autores</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link fs-5 dropdown-toggle" href="call-for-papers.html"
-                                id="navbarDropdownBlog" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Registro
-                            </a>
-
-                            <!-- Alinea “end” solo en pantallas grandes -->
-                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownBlog">
-                                <li><a class="dropdown-item fs-5" href="registro.html">Información de registro</a></li>
-                                <li><a class="dropdown-item fs-5" href="costos.html">Costos</a></li>
-                                <li><a class="dropdown-item fs-5" href="apoyo-estudiantes.html">Apoyo a estudiantes</a></li>
-                            </ul>
-                        </li>
+                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownCfp">
+                        <li><a class="dropdown-item fs-5" href="call-for-papers.html">Convocatoria</a></li>
+                        <li><a class="dropdown-item fs-5" href="info-autores.html">Información Autores</a></li>
                     </ul>
-                    </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                    <a class="nav-link fs-5 dropdown-toggle" href="registro.html"
+                        id="navbarDropdownRegistro" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Registro
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownRegistro">
+                        <li><a class="dropdown-item fs-5" href="registro.html">Información de registro</a></li>
+                        <li><a class="dropdown-item fs-5" href="costos.html">Costos</a></li>
+                        <li><a class="dropdown-item fs-5" href="apoyo-estudiantes.html">Apoyo a estudiantes</a></li>
+                    </ul>
+                    </li>
+                </ul>
                 </div>
+
+                <!-- Botón idioma + toggler (siempre visibles al lado derecho) -->
+                <div class="d-flex align-items-center ms-2 ms-lg-3">
+                <!-- Cambia href por tu ruta real en inglés -->
+                <a class="btn btn-sm btn-outline-secondary rounded-pill px-3"
+                    href="en/index.html">
+                    English
+                </a>
+
+                <button class="navbar-toggler ms-2" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                </div>
+
+            </div>
             </nav>
+
 
             <!-- Page content-->
                 <!-- Header-->
