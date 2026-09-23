@@ -1,0 +1,111 @@
+rules_version = '2';
+
+service cloud.firestore {
+    match /databases/{database}/documents {
+
+        function signedIn() {
+            return request.auth != null;
+        }
+
+        function isAdmin() {
+            return signedIn()
+                && exists(
+                    /databases/$(database)/documents/administradores/$(request.auth.uid)
+                )
+                && get(
+                    /databases/$(database)/documents/administradores/$(request.auth.uid)
+                ).data.activo == true;
+        }
+
+        function commonRegistrationIsValid() {
+            return signedIn()
+                && request.resource.data.versionEsquema == 1
+                && request.resource.data.tipo in [
+                    "poster",
+                    "taller",
+                    "futbot"
+                ]
+                && request.resource.data.estado == "pendiente"
+                && request.resource.data.codigoRegistro is string
+                && request.resource.data.codigoRegistro.size() >= 8
+                && request.resource.data.creadoPor == request.auth.uid
+                && request.resource.data.creadoEn == request.time
+                && request.resource.data.validadoEn == null
+                && request.resource.data.validadoPor == null
+                && request.resource.data.correoValidacionEnviado == false
+                && request.resource.data.participante is map
+                && request.resource.data.participante.nombre is string
+                && request.resource.data.participante.nombre.size() >= 3
+                && request.resource.data.participante.email is string
+                && request.resource.data.participante.email.size() >= 5
+                && request.resource.data.participante.institucion is string
+                && request.resource.data.participante.institucion.size() >= 2;
+        }
+
+        function typeSpecificRegistrationIsValid() {
+            return (
+                request.resource.data.tipo == "poster"
+                && request.resource.data.poster is map
+                && request.resource.data.poster.nombreProyecto is string
+                && request.resource.data.poster.nombreProyecto.size() >= 3
+            )
+            || (
+                request.resource.data.tipo == "taller"
+                && request.resource.data.talleres is list
+                && request.resource.data.talleres.size() >= 1
+                && request.resource.data.talleres.size() <= 5
+                && request.resource.data.prioridad in [1, 2]
+            )
+            || (
+                request.resource.data.tipo == "futbot"
+                && request.resource.data.equipo is map
+                && request.resource.data.equipo.nombre is string
+                && request.resource.data.equipo.nombre.size() >= 2
+                && request.resource.data.equipo.modalidad is string
+                && request.resource.data.equipo.modalidad.size() >= 1
+                && request.resource.data.equipo.integrantes is list
+                && request.resource.data.equipo.integrantes.size() >= 2
+                && request.resource.data.equipo.integrantes.size() <= 5
+            );
+        }
+
+        match /registros/{registroId} {
+            allow create: if commonRegistrationIsValid()
+                && typeSpecificRegistrationIsValid();
+
+            allow read, update, delete: if isAdmin();
+        }
+
+        match /solicitudesAdmin/{uid} {
+            allow create: if signedIn()
+                && request.auth.uid == uid
+                && request.auth.token.firebase.sign_in_provider != "anonymous"
+                && request.resource.data.estado == "pendiente"
+                && request.resource.data.email == request.auth.token.email;
+
+            allow read: if isAdmin()
+                || (
+                    signedIn()
+                    && request.auth.uid == uid
+                );
+
+            allow update, delete: if isAdmin();
+        }
+
+        match /administradores/{uid} {
+            allow read: if isAdmin()
+                || (
+                    signedIn()
+                    && request.auth.uid == uid
+                );
+
+            // Los administradores se autorizan manualmente desde Firebase Console
+            // o posteriormente desde un backend privilegiado.
+            allow create, update, delete: if false;
+        }
+
+        match /{document=**} {
+            allow read, write: if false;
+        }
+    }
+}

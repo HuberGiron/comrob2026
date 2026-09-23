@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Registros COMRob 2026</title>
+    <link href="assets/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-semibold" href="#">
+                COMRob 2026 · Registros
+            </a>
+
+            <div class="d-flex align-items-center gap-3">
+                <span class="small text-muted" id="adminEmail"></span>
+                <button
+                    class="btn btn-sm btn-outline-secondary"
+                    id="logoutButton"
+                    type="button"
+                >
+                    Cerrar sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid px-4 py-4">
+        <div
+            class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4"
+        >
+            <div>
+                <h1 class="h3 mb-1">Registros</h1>
+                <p class="text-muted mb-0">
+                    Posters, talleres y competencia FutBot.
+                </p>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <button
+                    class="btn btn-outline-success"
+                    id="exportView"
+                    type="button"
+                >
+                    Exportar vista a Excel
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    id="exportAll"
+                    type="button"
+                >
+                    Exportar todo a Excel
+                </button>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterType">Tipo</label>
+                        <select class="form-select" id="filterType">
+                            <option value="">Todos</option>
+                            <option value="poster">Posters</option>
+                            <option value="taller">Talleres</option>
+                            <option value="futbot">FutBot</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterStatus">Estado</label>
+                        <select class="form-select" id="filterStatus">
+                            <option value="">Todos</option>
+                            <option value="pendiente">Pendientes</option>
+                            <option value="validado">Validados</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label" for="filterSearch">Buscar</label>
+                        <input
+                            class="form-control"
+                            id="filterSearch"
+                            placeholder="Nombre, correo, institución, equipo, artículo..."
+                            type="search"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+            <span class="small text-muted" id="recordCount">Cargando...</span>
+            <span class="small text-muted">
+                “Validado” = pago/registro verificado por administración
+            </span>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Participante</th>
+                            <th>Institución</th>
+                            <th>Prioridad</th>
+                            <th>Actividad / equipo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsBody">
+                        <tr>
+                            <td class="text-center py-5 text-muted" colspan="8">
+                                Cargando registros...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div
+        aria-hidden="true"
+        aria-labelledby="detailModalLabel"
+        class="modal fade"
+        id="detailModal"
+        tabindex="-1"
+    >
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="detailModalLabel">
+                        Detalle del registro
+                    </h2>
+                    <button
+                        aria-label="Cerrar"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        type="button"
+                    ></button>
+                </div>
+                <div class="modal-body" id="detailContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/admin-registros.js" type="module"></script>
+</body>
+</html>

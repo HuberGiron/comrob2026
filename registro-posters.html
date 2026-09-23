@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Registro de Posters · COMRob 2026</title>
+    <link href="assets/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-shrink-0">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container px-5">
+        <a class="navbar-brand d-flex align-items-center" href="./">
+            <img alt="COMROB" height="80" src="assets/Comrob_logo.png"/>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item"><a class="nav-link fs-5" href="./">Inicio</a></li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class="nav-link fs-5 dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navbarDropdownPrograma" role="button">Programa</a>
+                    <ul aria-labelledby="navbarDropdownPrograma" class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item fs-5" href="index.html#conferencistas">Conferencistas</a></li>
+                        <li><a class="dropdown-item fs-5" href="cronograma.html">Cronograma</a></li>
+                        <li><a class="dropdown-item fs-5" href="talleres.html">Talleres</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class="nav-link fs-5 dropdown-toggle" data-bs-toggle="dropdown" href="call-for-papers.html" id="navbarDropdownCfp" role="button">Call for papers</a>
+                    <ul aria-labelledby="navbarDropdownCfp" class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item fs-5" href="call-for-papers.html">Convocatoria</a></li>
+                        <li><a class="dropdown-item fs-5" href="info-autores.html">Información Autores</a></li>
+                        <li><a class="dropdown-item fs-5" href="posters.html">Registro de posters</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class="nav-link fs-5 dropdown-toggle" data-bs-toggle="dropdown" href="registro.html" id="navbarDropdownRegistro" role="button">Registro</a>
+                    <ul aria-labelledby="navbarDropdownRegistro" class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item fs-5" href="registro.html">Información de registro</a></li>
+                        <li><a class="dropdown-item fs-5" href="costos.html">Costos</a></li>
+                        <li><a class="dropdown-item fs-5" href="apoyo-estudiantes.html">Apoyo a estudiantes</a></li>
+                        <li><a class="dropdown-item fs-5" href="apoyo-estudiantes.html#premio-tesis-amrob">Premio AMRob Tesis</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link fs-5" href="adrc.html">ADRC</a></li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class="nav-link fs-5 dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navbarDropdownVenue" role="button">Viaje</a>
+                    <ul aria-labelledby="navbarDropdownVenue" class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item fs-5" href="hoteles.html">Hoteles</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex align-items-center ms-2 ms-lg-3">
+            <a class="btn btn-sm btn-outline-secondary rounded-pill px-3" href="en/registro-posters.html">English</a>
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Abrir navegación" class="navbar-toggler ms-2" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-secondary bg-gradient text-white py-5"><div class="container px-4 text-center"><h1 class="fw-bolder mb-2">Registro de Posters</h1><p class="lead mb-0">COMRob 2026 · Sesión de carteles</p></div></header>
+<section class="bg-light py-5"><div class="container px-4"><div class="row justify-content-center"><div class="col-lg-9 col-xl-8">
+<div class="alert alert-danger d-none" data-error role="alert"></div>
+<div class="d-none mb-4" data-success></div>
+<form class="card shadow-sm border-0" data-registration-form data-registration-type="poster"><div class="card-body p-4 p-lg-5">
+
+<h2 class="h4 mb-3">Datos del participante</h2>
+<p class="text-muted">Este registro será revisado junto con la información de pago.</p>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label" for="nombre">Nombre completo</label>
+        <input autocomplete="name" class="form-control" id="nombre" name="nombre" required type="text"/>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="email">Correo electrónico</label>
+        <input autocomplete="email" class="form-control" id="email" name="email" required type="email"/>
+        <div class="form-text">Utiliza de preferencia el mismo correo asociado a tu registro/pago del congreso.</div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="institucion">Institución de procedencia</label>
+        <input class="form-control" id="institucion" name="institucion" required type="text"/>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="programa">Programa de estudios / área académica</label>
+        <input class="form-control" id="programa" name="programa" required type="text"/>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="tipoParticipante">Tipo de participante</label>
+        <select class="form-select" id="tipoParticipante" name="tipoParticipante" required>
+            <option value="">Selecciona una opción</option>
+            <option value="ponente_estudiante">Ponente estudiante</option>
+            <option value="ponente_profesional">Ponente investigador/profesional</option>
+            <option value="estudiante_asistente">Estudiante asistente</option>
+            <option value="profesional_asistente">Investigador/profesional asistente</option>
+            <option value="otro">Otro</option>
+        </select>
+    </div>
+    <div class="col-md-6 d-none" data-article-wrapper>
+        <label class="form-label" for="articuloId">ID de artículo</label>
+        <input class="form-control" id="articuloId" name="articuloId" type="text"/>
+    </div>
+</div>
+
+<hr class="my-4"/>
+<h2 class="h4 mb-3">Datos del cartel</h2>
+<div class="mb-3"><label class="form-label" for="nombreProyecto">Nombre del proyecto</label><input class="form-control" id="nombreProyecto" name="nombreProyecto" required type="text"/></div>
+<div class="mb-4"><label class="form-label" for="autoresAdicionales">Autores adicionales <span class="text-muted">(opcional)</span></label><textarea class="form-control" id="autoresAdicionales" name="autoresAdicionales" rows="3"></textarea></div>
+<div class="alert alert-light border">Al enviar el formulario, el registro quedará como <strong>pendiente de validación</strong>. El Comité Organizador verificará la información de pago y enviará posteriormente la confirmación.</div>
+<button class="btn btn-danger btn-lg" type="submit">Enviar registro</button>
+
+</div></form>
+</div></div></div></section>
+</main>
+
+<footer class="bg-danger mt-auto">
+    <div class="container py-3 px-5">
+        <div class="row justify-content-center align-items-center text-center g-4">
+            <div class="col-12 col-md-auto small">
+                <p class="text-white mb-0">Prolongación Paseo de Reforma 880,</p>
+                <p class="text-white mb-0">Lomas de Santa Fe, México,</p>
+                <p class="text-white mb-0">C.P. 01219, CDMX.</p>
+            </div>
+            <div class="col-12 col-md-auto"><img alt="DEII" class="img-fluid" src="assets/deii.png" style="max-width:200px;"/></div>
+            <div class="col-12 col-md-auto small">
+                <p class="text-white mb-0">Contacto:</p>
+                <p class="text-white mb-0">Comité Organizador</p>
+                <p class="text-white mb-0">comrob26@ibero.mx</p>
+            </div>
+        </div>
+        <div class="text-center small text-white mt-4">Copyright © COMRob 2026</div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/registro-publico.js" type="module"></script>
+</body>
+</html>
