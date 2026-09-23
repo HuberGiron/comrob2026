@@ -202,29 +202,58 @@
             <div class="container px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 col-xl-9">
+
                         <article class="card shadow-sm border-0 mb-4">
                             <div class="card-body p-4 p-lg-5">
-                                <div class="d-flex flex-column flex-lg-row gap-4 align-items-lg-center">
-                                    <div class="flex-grow-1">
-                                        <span class="badge bg-danger rounded-pill mb-3">
-                                            FutBot · Teleoperated Category
-                                        </span>
-                                        <h2 class="fw-bold mb-3">COMRob 2026 FutBot Tournament</h2>
-                                        <p class="lead mb-3">
-                                            Design, build, and program teleoperated mobile robots to compete
-                                            in robotic soccer matches, integrating mechanics, electronics,
-                                            programming, wireless communication, and team strategy.
-                                        </p>
-                                        <p class="mb-0">
-                                            <strong>Date:</strong> October 27, 2026<br/>
-                                            <strong>Venue:</strong> Universidad Iberoamericana Mexico City
-                                        </p>
+                                <span class="badge bg-danger rounded-pill mb-3">
+                                    FutBot · Teleoperated Category
+                                </span>
+
+                                <h2 class="fw-bold mb-3">COMRob 2026 FutBot Tournament</h2>
+
+                                <p class="lead mb-4">
+                                    Join the robotic soccer competition with a team of teleoperated mobile robots,
+                                    combining mechanical design, electronics, programming, wireless communication,
+                                    and team strategy.
+                                </p>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 bg-white p-3 h-100">
+                                            <div class="small text-muted">Date</div>
+                                            <div class="fw-semibold">October 27, 2026</div>
+                                        </div>
                                     </div>
-                                    <div class="flex-shrink-0 text-center">
-                                        <a class="btn btn-danger btn-lg" href="registro-futbot.html">
-                                            FutBot Registration
-                                        </a>
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 bg-white p-3 h-100">
+                                            <div class="small text-muted">Venue</div>
+                                            <div class="fw-semibold">IBERO Mexico City</div>
+                                        </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 bg-white p-3 h-100">
+                                            <div class="small text-muted">Teams</div>
+                                            <div class="fw-semibold">2 to 5 members</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column flex-md-row gap-3">
+                                    <a
+                                        class="btn btn-danger btn-lg"
+                                        href="registro-futbot.html"
+                                    >
+                                        FutBot Registration
+                                    </a>
+
+                                    <a
+                                        class="btn btn-outline-danger btn-lg"
+                                        href="../assets/docs/FutBot_COMRob26_propuesta.docx"
+                                        download
+                                    >
+                                        <i class="bi bi-download me-2"></i>
+                                        Download full call
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -233,18 +262,12 @@
                             <div class="col-md-6">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body p-4">
-                                        <h3 class="h5 fw-bold">Teams</h3>
+                                        <h3 class="h5 fw-bold">Key information</h3>
                                         <ul class="mb-0">
-                                            <li>2 to 5 team members.</li>
-                                            <li>Each participant must provide a valid official photo ID.</li>
-                                            <li>
-                                                One mentor or technical advisor over 18 years old is permitted,
-                                                but may not directly interact during official matches.
-                                            </li>
-                                            <li>
-                                                Team members must have designed, built, programmed, and/or integrated
-                                                more than 51% of the robot, including hardware and software.
-                                            </li>
+                                            <li>Maximum of 2 robots per team.</li>
+                                            <li>Teleoperated category using wireless communication.</li>
+                                            <li>Golf balls are the official game balls.</li>
+                                            <li>One mentor or technical advisor is permitted per team.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -253,132 +276,35 @@
                             <div class="col-md-6">
                                 <div class="card h-100 shadow-sm border-0">
                                     <div class="card-body p-4">
-                                        <h3 class="h5 fw-bold">Robots</h3>
+                                        <h3 class="h5 fw-bold">Robot</h3>
                                         <ul class="mb-0">
-                                            <li>Maximum of 2 registered and competing robots per team.</li>
-                                            <li>Maximum weight per robot: 1.4 kg.</li>
-                                            <li>Maximum diameter and height: 22 cm.</li>
-                                            <li>Maximum ball-capture depth: 1.5 cm.</li>
-                                            <li>Each robot must include a stable and accessible carrying handle.</li>
+                                            <li>Maximum weight: 1.4 kg.</li>
+                                            <li>Maximum diameter: 22 cm.</li>
+                                            <li>Maximum height: 22 cm.</li>
+                                            <li>The design must comply with the tournament safety requirements.</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="h3 mb-3">Main Technical Requirements</h2>
-                        <div class="card shadow-sm border-0 mb-4">
-                            <div class="card-body p-4">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered align-middle mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Category</th>
-                                                <td>Teleoperated through wireless communication.</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Game ball</th>
-                                                <td>Golf balls.</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Power</th>
-                                                <td>
-                                                    Battery-powered only, with voltage no greater than
-                                                    48 V DC or 25 V AC RMS.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Communication</th>
-                                                <td>
-                                                    RF, Wi-Fi, or Bluetooth may be used for teleoperation.
-                                                    Communication between robots is limited to the 2.4 GHz band
-                                                    with a maximum power of 100 mW EIRP.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Kicker</th>
-                                                <td>
-                                                    A ball-kicking mechanism is permitted and its power
-                                                    may be verified during the competition.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="bg-light" scope="row">Field</th>
-                                                <td>243 cm long × 182 cm wide.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="alert alert-warning shadow-sm mb-0" role="alert">
+                            <div class="fw-semibold mb-1">Read the complete rules</div>
+                            This page provides only a summary of the competition. Detailed technical specifications,
+                            game rules, penalties, refereeing, safety requirements, and field specifications are included
+                            in the complete call for participation.
+                            <div class="mt-3">
+                                <a
+                                    class="btn btn-outline-dark"
+                                    href="../assets/docs/FutBot_COMRob26_propuesta.docx"
+                                    download
+                                >
+                                    <i class="bi bi-file-earmark-word me-2"></i>
+                                    Download call in Word (Spanish)
+                                </a>
                             </div>
                         </div>
 
-                        <div class="row g-4 mb-4">
-                            <div class="col-md-6">
-                                <div class="card h-100 shadow-sm border-0">
-                                    <div class="card-body p-4">
-                                        <h3 class="h5 fw-bold">Safety and Design</h3>
-                                        <ul class="mb-0">
-                                            <li>Sharp edges and pinch points are not permitted.</li>
-                                            <li>Lithium batteries must be stored and charged using appropriate safety measures.</li>
-                                            <li>Robots must include an emergency stop function.</li>
-                                            <li>Wiring and active components must remain protected.</li>
-                                            <li>
-                                                Any potentially hazardous robot behavior must be reported
-                                                to the Organizing Committee at least two weeks before the event.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="card h-100 shadow-sm border-0">
-                                    <div class="card-body p-4">
-                                        <h3 class="h5 fw-bold">Originality and Kits</h3>
-                                        <ul class="mb-0">
-                                            <li>
-                                                Robotics kits are allowed if the soccer-specific component
-                                                is developed by the team.
-                                            </li>
-                                            <li>
-                                                Soccer-specific hardware or software not created by the team
-                                                may not be used.
-                                            </li>
-                                            <li>
-                                                External code may be used with proper credit;
-                                                complete third-party solutions are not accepted.
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h2 class="h3 mb-3">During the Competition</h2>
-                        <div class="card shadow-sm border-0 mb-4">
-                            <div class="card-body p-4">
-                                <ul class="mb-0">
-                                    <li>The match schedule will indicate the time and field for each game.</li>
-                                    <li>Teams must be at the field 5 minutes before the match starts.</li>
-                                    <li>Robots must be certified before the first match and may undergo random inspections.</li>
-                                    <li>Human interference with robots, the field, or the ball is not permitted during play.</li>
-                                    <li>Referee decisions during the match are final.</li>
-                                    <li>Teams must compete fairly and avoid deliberate interference or damage.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="alert alert-warning shadow-sm mb-4" role="alert">
-                            <div class="fw-semibold mb-1">Important</div>
-                            This page provides a summary of the call for participation. Competitors must comply
-                            with the official rules and with instructions issued by the Organizing Committee during the tournament.
-                        </div>
-
-                        <div class="text-center">
-                            <a class="btn btn-danger btn-lg" href="registro-futbot.html">
-                                Register for FutBot
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
