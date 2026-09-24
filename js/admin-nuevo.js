@@ -37,7 +37,9 @@ form.addEventListener("submit", async (event) => {
     }
 
     if (password.length < 8) {
-        showMessage("Utiliza una contraseña de por lo menos 8 caracteres.");
+        showMessage(
+            "Utiliza una contraseña de por lo menos 8 caracteres."
+        );
         return;
     }
 
@@ -58,6 +60,7 @@ form.addEventListener("submit", async (event) => {
                 nombre,
                 email,
                 estado: "pendiente",
+                autorizado: false,
                 creadoEn: serverTimestamp()
             }
         );
@@ -65,8 +68,9 @@ form.addEventListener("submit", async (event) => {
         await signOut(auth);
 
         form.classList.add("d-none");
+
         showMessage(
-            "Cuenta creada. Falta que el superusuario autorice tu UID en la colección administradores de Firestore.",
+            "Cuenta creada. El acceso quedará disponible cuando el superusuario cambie autorizado a true en Firebase.",
             "success"
         );
     } catch (error) {

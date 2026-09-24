@@ -10,11 +10,11 @@ service cloud.firestore {
         function isAdmin() {
             return signedIn()
                 && exists(
-                    /databases/$(database)/documents/administradores/$(request.auth.uid)
+                    /databases/$(database)/documents/solicitudesAdmin/$(request.auth.uid)
                 )
                 && get(
-                    /databases/$(database)/documents/administradores/$(request.auth.uid)
-                ).data.activo == true;
+                    /databases/$(database)/documents/solicitudesAdmin/$(request.auth.uid)
+                ).data.autorizado == true;
         }
 
         function commonRegistrationIsValid() {
@@ -81,6 +81,7 @@ service cloud.firestore {
                 && request.auth.uid == uid
                 && request.auth.token.firebase.sign_in_provider != "anonymous"
                 && request.resource.data.estado == "pendiente"
+                && request.resource.data.autorizado == false
                 && request.resource.data.email == request.auth.token.email;
 
             allow read: if isAdmin()
@@ -90,18 +91,6 @@ service cloud.firestore {
                 );
 
             allow update, delete: if isAdmin();
-        }
-
-        match /administradores/{uid} {
-            allow read: if isAdmin()
-                || (
-                    signedIn()
-                    && request.auth.uid == uid
-                );
-
-            // Los administradores se autorizan manualmente desde Firebase Console
-            // o posteriormente desde un backend privilegiado.
-            allow create, update, delete: if false;
         }
 
         match /{document=**} {

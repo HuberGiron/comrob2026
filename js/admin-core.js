@@ -28,11 +28,11 @@ export async function isAdministrator(user) {
     }
 
     const snapshot = await getDoc(
-        doc(db, "administradores", user.uid)
+        doc(db, "solicitudesAdmin", user.uid)
     );
 
     return snapshot.exists() &&
-        snapshot.data().activo === true;
+        snapshot.data().autorizado === true;
 }
 
 export async function requireAdministrator() {
