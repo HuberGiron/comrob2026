@@ -61,33 +61,45 @@ document.addEventListener("DOMContentLoaded", function () {
     const isEnglish = document.documentElement.lang.toLowerCase().startsWith("en") ||
         window.location.pathname.includes("/en/");
     const T = isEnglish ? {
-        building: "Building", room: "Room", location: "Location",
+        building: "Building", room: "Room", auditorium: "Auditorium", location: "Location",
         topic: "Topic", topics: "Topics", papers: "papers",
         article: "Paper", information: "View papers", close: "Close",
         session: "Technical session", schedule: "Scheduled technical sessions",
         exactTime: "Times refer to the session block; individual paper times have not been assigned.",
-        missing: "Can't find your paper in the program? Email",
+        missing: "If your paper was accepted but you cannot find it in the program, email",
         email: "comrob26@ibero.mx", show: "See room and papers",
         generalIniAt: "general INIAT location; exact room to be confirmed",
         posterior: "Poster Session", posterLocation: "Lobby of the Fernando Bustos Barrena Auditorium",
         kelly: "Rafael Kelly Award Session (parallel to Technical Sessions, Block 2)",
         select: "Select a room to see its topic, location, paper numbers and titles.",
         level1: "Level 1", level2: "Level 2", basement: "Basement", ground: "Ground floor",
-        mixed: "Mixed-topic session"
+        mixed: "Mixed-topic session",
+        findPaper: "Find a paper", searchHint: "Search by paper number or title to find its schedule and auditorium.",
+        searchInput: "Paper number or title", searchPlaceholder: "E.g. #57 or robot control",
+        searchInstructions: "Enter a paper number or words from its title.",
+        noResults: "No papers found. Try a different number or title.",
+        blockTime: "Session time", results: "matches", moreResults: "More results are available; refine your search.",
+        dayNames: ["Monday, October 26, 2026", "Tuesday, October 27, 2026", "Wednesday, October 28, 2026"]
     } : {
-        building: "Edificio", room: "Sala", location: "Ubicación",
+        building: "Edificio", room: "Sala", auditorium: "Auditorio", location: "Ubicación",
         topic: "Temática", topics: "Temáticas", papers: "ponencias",
         article: "Artículo", information: "Ver artículos", close: "Cerrar",
         session: "Sesión técnica", schedule: "Sesiones técnicas programadas",
         exactTime: "El horario corresponde al bloque; no se ha asignado una hora individual a cada artículo.",
-        missing: "¿No encuentras tu artículo en el programa? Escríbenos a",
+        missing: "Si tu artículo fue aceptado y no lo encuentras en el programa, escríbenos a",
         email: "comrob26@ibero.mx", show: "Ver sala y artículos",
         generalIniAt: "ubicación general de INIAT; aula específica por confirmar",
         posterior: "Sesión de pósteres", posterLocation: "Vestíbulo del Auditorio Fernando Bustos Barrena",
         kelly: "Sesión del Premio Rafael Kelly (en paralelo a las sesiones técnicas, bloque 2)",
         select: "Selecciona una sala para consultar temática, ubicación, números y títulos de artículos.",
         level1: "Nivel 1", level2: "Nivel 2", basement: "Sótano", ground: "Planta baja",
-        mixed: "Sesión de temática mixta"
+        mixed: "Sesión de temática mixta",
+        findPaper: "Buscar artículo", searchHint: "Consulta el día, horario y auditorio buscando por número o título.",
+        searchInput: "Número o título del artículo", searchPlaceholder: "Ej. #57 o control de robots",
+        searchInstructions: "Escribe el número del artículo o palabras de su título.",
+        noResults: "No se encontraron artículos. Prueba con otro número o título.",
+        blockTime: "Horario del bloque", results: "resultados", moreResults: "Hay más resultados; especifica mejor tu búsqueda.",
+        dayNames: ["Lunes 26 de octubre de 2026", "Martes 27 de octubre de 2026", "Miércoles 28 de octubre de 2026"]
     };
     const newTitle = "Foundations of Disturbance Reconstructability, Learning, and Control for Safe Robotic Autonomy";
     const oldTitles = [
@@ -110,6 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (/nivel 1/i.test(level)) return T.level1;
         if (/nivel 2/i.test(level)) return T.level2;
         return level;
+    }
+
+    function auditoriumName(session) {
+        return session.room === "INIAT" ? "INIAT" : T.auditorium + " " + session.room;
     }
 
     function roomLocation(session) {
@@ -142,14 +158,19 @@ document.addEventListener("DOMContentLoaded", function () {
             ".comrob-sponsor-logo{width:100%;max-width:225px;max-height:104px;object-fit:contain;}\n" +
             ".comrob-room-btn{height:100%;min-height:105px;transition:background-color .15s ease,border-color .15s ease;text-align:left;white-space:normal;}\n" +
             ".comrob-room-btn:hover,.comrob-room-btn:focus-visible{background-color:#fff2f3;border-color:#b02a37;}\n" +
-            ".comrob-room-btn .comrob-room-name{font-size:.98rem;font-weight:700;line-height:1.2;}\n" +
-            ".comrob-room-btn .comrob-room-topic{font-size:.82rem;line-height:1.3;}\n" +
+            ".comrob-room-btn .comrob-room-topic{font-size:.98rem;font-weight:700;line-height:1.25;color:#212529;}\n" +
+            ".comrob-room-btn .comrob-room-name{font-size:.82rem;font-weight:400;line-height:1.3;color:#6c757d;}\n" +
             ".comrob-paper-list{counter-reset:none;padding-left:0;list-style:none;}\n" +
             ".comrob-paper-list>li{border-bottom:1px solid #e9ecef;padding:.7rem 0;display:flex;align-items:flex-start;gap:.8rem;}\n" +
             ".comrob-paper-list>li:last-child{border-bottom:0;}\n" +
             ".comrob-paper-number{flex:0 0 3rem;font-size:.84rem;margin-top:.12rem;}\n" +
             ".comrob-paper-title{overflow-wrap:anywhere;line-height:1.45;}\n" +
-            ".comrob-location-line{font-size:.84rem;color:#495057;}\n";
+            ".comrob-location-line{font-size:.84rem;color:#495057;}\n" +
+            ".comrob-paper-search-card{border-left:4px solid #b02a37!important;}\n" +
+            ".comrob-search-result{border-bottom:1px solid #e9ecef;padding:1rem .25rem;}\n" +
+            ".comrob-search-result:last-child{border-bottom:0;}\n" +
+            ".comrob-search-result .comrob-search-paper-title{overflow-wrap:anywhere;line-height:1.4;}\n" +
+            ".comrob-search-result .comrob-search-details{font-size:.9rem;}\n";
         document.head.appendChild(style);
     }
 
@@ -238,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.innerHTML = '<div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content">' +
             '<div class="modal-header bg-danger text-white"><div>' +
             '<div class="small text-white-50">' + escapeHtml(T.session + ' · ' + session.date + ' · ' + session.start + '–' + session.end) + '</div>' +
-            '<h2 class="modal-title h5 mb-0" id="' + modalId + '-title">' + escapeHtml(session.room) + '</h2>' +
+            '<h2 class="modal-title h5 mb-0" id="' + modalId + '-title">' + escapeHtml(auditoriumName(session)) + '</h2>' +
             '</div><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="' + escapeHtml(T.close) + '"></button></div>' +
             '<div class="modal-body px-4 py-3"><div class="small text-muted mb-2"><strong>' + escapeHtml(T.location) + ':</strong> ' + escapeHtml(roomLocation(session)) + '</div>' +
             '<div class="mb-3"><strong>' + escapeHtml(topicLabel) + ':</strong> ' + escapeHtml(topics.join(' / ')) + '</div>' +
@@ -249,6 +270,106 @@ document.addEventListener("DOMContentLoaded", function () {
             '</div></div>';
         document.body.appendChild(modal);
         return modalId;
+    }
+
+    // Consulta transversal del programa: 91 artículos, tres días, quince sesiones.
+    // La hora mostrada corresponde al bloque técnico, no a una ponencia individual.
+    function createPaperSearch(root, sessions) {
+        if (document.getElementById("comrob-paper-search-modal")) return;
+        const host = root.querySelector(".container > .row > div");
+        if (!host) return;
+        const modalId = "comrob-paper-search-modal";
+        const inputId = "comrob-paper-search-input";
+        const statusId = "comrob-paper-search-status";
+        const resultsId = "comrob-paper-search-results";
+
+        // El acceso queda antes de las tablas del lunes, martes y miércoles.
+        const banner = document.createElement("div");
+        banner.className = "card shadow-sm border-0 rounded-3 mb-4 comrob-paper-search-card";
+        banner.innerHTML = '<div class="card-body p-3 p-md-4 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">' +
+            '<div><h2 class="h5 fw-bold mb-1"><i class="bi bi-search text-danger me-2" aria-hidden="true"></i>' +
+            escapeHtml(T.findPaper) + '</h2><p class="text-muted small mb-0">' + escapeHtml(T.searchHint) + '</p></div>' +
+            '<button type="button" class="btn btn-danger flex-shrink-0" data-bs-toggle="modal" data-bs-target="#' + modalId + '">' +
+            '<i class="bi bi-search me-1" aria-hidden="true"></i>' + escapeHtml(T.findPaper) + '</button></div>';
+        host.insertBefore(banner, host.firstChild);
+
+        const modal = document.createElement("div");
+        modal.className = "modal fade";
+        modal.id = modalId;
+        modal.tabIndex = -1;
+        modal.setAttribute("aria-hidden", "true");
+        modal.setAttribute("aria-labelledby", "comrob-paper-search-title");
+        modal.innerHTML = '<div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content">' +
+            '<div class="modal-header bg-danger text-white"><h2 class="modal-title h5 mb-0" id="comrob-paper-search-title">' +
+            escapeHtml(T.findPaper) + '</h2><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="' +
+            escapeHtml(T.close) + '"></button></div><div class="modal-body p-4">' +
+            '<label class="form-label fw-semibold" for="' + inputId + '">' + escapeHtml(T.searchInput) + '</label>' +
+            '<div class="input-group mb-3"><span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>' +
+            '<input class="form-control" type="search" id="' + inputId + '" autocomplete="off"' +
+            ' aria-controls="' + resultsId + '" aria-describedby="' + statusId + '" placeholder="' +
+            escapeHtml(T.searchPlaceholder) + '"></div>' +
+            '<p class="small text-muted" id="' + statusId + '" role="status" aria-live="polite"></p>' +
+            '<div id="' + resultsId + '"></div>' +
+            '<div class="alert alert-light border-start border-4 border-danger small mt-3 mb-0" role="note">' +
+            '<i class="bi bi-envelope text-danger me-1" aria-hidden="true"></i>' + escapeHtml(T.missing) + ' ' +
+            '<a class="fw-semibold link-danger" href="mailto:' + escapeHtml(T.email) +
+            '?subject=' + encodeURIComponent('COMRob 2026 - ' + (isEnglish ? 'Accepted paper not found' : 'Artículo aceptado no localizado')) +
+            '">' + escapeHtml(T.email) + '</a>.</div></div>' +
+            '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">' +
+            escapeHtml(T.close) + '</button></div></div></div>';
+        document.body.appendChild(modal);
+
+        const input = modal.querySelector("#" + inputId);
+        const status = modal.querySelector("#" + statusId);
+        const resultList = modal.querySelector("#" + resultsId);
+        const papers = sessions.flatMap(function (session) {
+            return session.papers.map(function (paper) { return {paper: paper, session: session}; });
+        }).sort(function (a, b) { return Number(a.paper.id) - Number(b.paper.id); });
+
+        function normalize(value) {
+            return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase().replace(/[-–—:;,._/\\]+/g, " ").trim();
+        }
+        function updateResults() {
+            const query = normalize(input.value);
+            if (!query) {
+                status.textContent = T.searchInstructions;
+                resultList.replaceChildren();
+                return;
+            }
+            // #7, 007, "artículo 7" y "paper 7" buscan el número exacto.
+            const numberMatch = /^(?:(?:articulo|paper|numero|no)\s*)?#?\s*0*(\d+)$/.exec(query);
+            const words = query.split(/\s+/).filter(Boolean);
+            const matches = papers.filter(function (entry) {
+                if (numberMatch) return Number(entry.paper.id) === Number(numberMatch[1]);
+                const title = normalize(entry.paper.title);
+                return words.every(function (word) { return title.includes(word); });
+            });
+            const visible = matches.slice(0, 25);
+            status.textContent = matches.length ? matches.length + " " + T.results +
+                (matches.length > visible.length ? ". " + T.moreResults : "") : T.noResults;
+            resultList.innerHTML = visible.map(function (entry) {
+                const p = entry.paper;
+                const session = entry.session;
+                const day = T.dayNames[session.day - 1] || session.date;
+                return '<article class="comrob-search-result">' +
+                    '<div class="d-flex align-items-start gap-2 mb-2"><span class="badge bg-danger flex-shrink-0">#' +
+                    escapeHtml(p.id) + '</span><span class="fw-semibold comrob-search-paper-title">' +
+                    escapeHtml(p.title) + '</span></div>' +
+                    '<div class="comrob-search-details ms-1">' +
+                    '<div class="mb-1"><i class="bi bi-calendar-event text-danger me-2" aria-hidden="true"></i>' +
+                    escapeHtml(day) + '</div>' +
+                    '<div class="mb-1"><i class="bi bi-clock text-danger me-2" aria-hidden="true"></i><strong>' +
+                    escapeHtml(T.blockTime) + ':</strong> ' + escapeHtml(session.start + '–' + session.end) + '</div>' +
+                    '<div class="mb-1"><i class="bi bi-door-open text-danger me-2" aria-hidden="true"></i><strong>' +
+                    escapeHtml(T.room) + ':</strong> ' + escapeHtml(auditoriumName(session)) + '</div>' +
+                    '<div class="text-muted"><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>' +
+                    escapeHtml(roomLocation(session)) + '</div></div></article>';
+            }).join("");
+        }
+        input.addEventListener("input", updateResults);
+        modal.addEventListener("shown.bs.modal", function () { input.focus(); input.select(); });
+        updateResults();
     }
 
     function renderTechnicalSessions(root, sessions) {
@@ -282,9 +403,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.className = "btn btn-light border w-100 p-3 comrob-room-btn";
                 btn.setAttribute("data-bs-toggle", "modal");
                 btn.setAttribute("data-bs-target", "#" + modalId);
-                btn.setAttribute("aria-label", T.show + ": " + session.room);
-                btn.innerHTML = '<span class="d-block comrob-room-name mb-1">' + escapeHtml(session.room) + '</span>' +
-                    '<span class="d-block text-muted comrob-room-topic mb-1">' + escapeHtml(sessionTopics(session).join(' / ')) + '</span>' +
+                const topicNames = sessionTopics(session).join(' / ');
+                btn.setAttribute("aria-label", T.show + ": " + topicNames + " · " + auditoriumName(session));
+                btn.innerHTML = '<span class="d-block comrob-room-topic mb-1">' + escapeHtml(topicNames) + '</span>' +
+                    '<span class="d-block text-muted comrob-room-name mb-1">' + escapeHtml(auditoriumName(session)) + '</span>' +
                     '<span class="d-block comrob-location-line mb-1"><i class="bi bi-geo-alt" aria-hidden="true"></i> ' + escapeHtml(roomLocation(session)) + '</span>' +
                     '<span class="d-block small fw-semibold text-danger">' + session.papers.length + ' ' + escapeHtml(T.papers) + ' · ' + escapeHtml(T.information) + ' <i class="bi bi-chevron-right" aria-hidden="true"></i></span>';
                 col.appendChild(btn);
@@ -292,6 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             activity.appendChild(grid);
         });
+        createPaperSearch(root, sessions);
         if (!document.getElementById("comrob-missing-paper-note")) {
             const note = document.createElement("div");
             note.id = "comrob-missing-paper-note";
