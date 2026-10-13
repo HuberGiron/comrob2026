@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         generalIniAt: "general INIAT location; exact room to be confirmed",
         posterior: "Poster Session", posterLocation: "Lobby of the Fernando Bustos Barrena Auditorium",
         kelly: "Rafael Kelly Award Session (parallel to Technical Sessions, Block 2)",
+        kellyTag: "Rafael Kelly Award Session",
         select: "Select a room to see its topic, location, paper numbers and titles.",
         level1: "Level 1", level2: "Level 2", basement: "Basement", ground: "Ground floor",
         mixed: "Mixed-topic session",
@@ -91,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         generalIniAt: "ubicación general de INIAT; aula específica por confirmar",
         posterior: "Sesión de pósteres", posterLocation: "Vestíbulo del Auditorio Fernando Bustos Barrena",
         kelly: "Sesión del Premio Rafael Kelly (en paralelo a las sesiones técnicas, bloque 2)",
+        kellyTag: "Sesión del Premio Rafael Kelly",
         select: "Selecciona una sala para consultar temática, ubicación, números y títulos de artículos.",
         level1: "Nivel 1", level2: "Nivel 2", basement: "Sótano", ground: "Planta baja",
         mixed: "Sesión de temática mixta",
@@ -148,6 +150,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function sessionTopics(session) {
         return Array.from(new Set(session.papers.map(paperTopic)));
+    }
+
+    // Únicamente en el bloque 2 del martes; el lunes también usa este auditorio.
+    function isRafaelKellySession(session) {
+        return session.id === "D2-S02" && session.day === 2 &&
+            session.room === "Ernesto Meneses Morales";
     }
 
     function addStyles() {
@@ -231,7 +239,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Se conserva el bloque 2 y se aclara que la sesión del premio es simultánea.
                 activity.innerHTML = '<div class="fw-semibold">' +
                     escapeHtml(isEnglish ? 'Technical Sessions, Block 2' : 'SESIONES TÉCNICAS, Bloque 2') +
-                    '</div><div class="small fw-semibold mt-1 text-danger">' + escapeHtml(T.kelly) + '</div>';
+                    '</div><div class="small fw-semibold mt-1 text-danger">' +
+                    escapeHtml(T.kelly + ' · ' + T.auditorium + ' Ernesto Meneses Morales') + '</div>';
             }
             if (/^(SESIONES TÉCNICAS, Bloque 3|Technical Sessions, Block 3)/i.test(label)) {
                 activity.textContent = isEnglish ? 'Technical Sessions, Block 3 – ADRC' : 'SESIONES TÉCNICAS, Bloque 3 – ADRC';
@@ -263,6 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
             '</div><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="' + escapeHtml(T.close) + '"></button></div>' +
             '<div class="modal-body px-4 py-3"><div class="small text-muted mb-2"><strong>' + escapeHtml(T.location) + ':</strong> ' + escapeHtml(roomLocation(session)) + '</div>' +
             '<div class="mb-3"><strong>' + escapeHtml(topicLabel) + ':</strong> ' + escapeHtml(topics.join(' / ')) + '</div>' +
+            (isRafaelKellySession(session) ? '<div class="small fw-semibold text-danger border-start border-3 border-danger ps-2 mb-3"><i class="bi bi-award me-1" aria-hidden="true"></i>' + escapeHtml(T.kellyTag) + '</div>' : '') +
             '<h3 class="h6 fw-bold">' + escapeHtml(session.papers.length + ' ' + T.papers) + '</h3>' +
             '<ol class="comrob-paper-list">' + itemsHtml + '</ol>' +
             '<p class="small text-muted mb-0">' + escapeHtml(T.exactTime) + '</p></div>' +
@@ -407,6 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.setAttribute("aria-label", T.show + ": " + topicNames + " · " + auditoriumName(session));
                 btn.innerHTML = '<span class="d-block comrob-room-topic mb-1">' + escapeHtml(topicNames) + '</span>' +
                     '<span class="d-block text-muted comrob-room-name mb-1">' + escapeHtml(auditoriumName(session)) + '</span>' +
+                    (isRafaelKellySession(session) ? '<span class="d-block small fw-semibold text-danger mb-1"><i class="bi bi-award me-1" aria-hidden="true"></i>' + escapeHtml(T.kellyTag) + '</span>' : '') +
                     '<span class="d-block comrob-location-line mb-1"><i class="bi bi-geo-alt" aria-hidden="true"></i> ' + escapeHtml(roomLocation(session)) + '</span>' +
                     '<span class="d-block small fw-semibold text-danger">' + session.papers.length + ' ' + escapeHtml(T.papers) + ' · ' + escapeHtml(T.information) + ' <i class="bi bi-chevron-right" aria-hidden="true"></i></span>';
                 col.appendChild(btn);
