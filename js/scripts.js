@@ -452,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
         addStyles();
         updateScheduleText(scheduleRoot);
         const programScript = document.createElement("script");
-        programScript.src = new URL("comrob2026-ponencias.js?v=20261013", scriptsUrl).href;
+        programScript.src = new URL("comrob2026-ponencias.js?actualizacion=" + Date.now(), scriptsUrl).href;
         programScript.async = true;
         programScript.onload = function () {
             const sessions = window.COMROB2026_PONENCIAS;
