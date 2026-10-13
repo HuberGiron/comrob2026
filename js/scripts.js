@@ -178,7 +178,40 @@ document.addEventListener("DOMContentLoaded", function () {
             ".comrob-search-result{border-bottom:1px solid #e9ecef;padding:1rem .25rem;}\n" +
             ".comrob-search-result:last-child{border-bottom:0;}\n" +
             ".comrob-search-result .comrob-search-paper-title{overflow-wrap:anywhere;line-height:1.4;}\n" +
-            ".comrob-search-result .comrob-search-details{font-size:.9rem;}\n";
+            ".comrob-search-result .comrob-search-details{font-size:.9rem;}\n" +
+            /* Diseño adaptable del cronograma: escritorio intacto; móviles en formato de actividades. */
+            "@media(max-width:767.98px){\n" +
+            "#general-schedule{padding-top:1.25rem!important;padding-bottom:1.5rem!important;}\n" +
+            "#general-schedule>.container{padding-left:.75rem!important;padding-right:.75rem!important;}\n" +
+            "#general-schedule>.container>.row{--bs-gutter-x:0;}\n" +
+            "#general-schedule .card-header{padding:.85rem 1rem;}\n" +
+            "#general-schedule .card-header h2{font-size:1.12rem;}\n" +
+            "#general-schedule .table-responsive{overflow-x:visible!important;}\n" +
+            "#general-schedule .table{display:block;width:100%!important;margin-bottom:0;}\n" +
+            "#general-schedule .table thead{display:none!important;}\n" +
+            "#general-schedule .table tbody{display:block;width:100%;}\n" +
+            "#general-schedule .table tbody>tr{display:flex!important;flex-direction:column;align-items:stretch;gap:.48rem;width:100%;padding:.86rem .9rem;border-bottom:1px solid #e5e7eb;}\n" +
+            "#general-schedule .table tbody>tr:last-child{border-bottom:0;}\n" +
+            "#general-schedule .table tbody>tr>td{display:block;box-sizing:border-box;width:100%!important;min-width:0;max-width:100%;padding:0!important;border:0!important;white-space:normal!important;overflow-wrap:anywhere;}\n" +
+            "#general-schedule .table tbody>tr>td:first-child{display:inline-flex;align-self:flex-start;width:auto!important;max-width:100%;padding:.26rem .6rem!important;background:#fce8eb;border-radius:.45rem;color:#a61c32!important;font-size:.85rem;font-weight:700;letter-spacing:.01em;white-space:nowrap!important;}\n" +
+            "#general-schedule .table tbody>tr>td:nth-child(2){font-size:.97rem;line-height:1.5;}\n" +
+            "#general-schedule .table tbody>tr>td:nth-child(2) .fw-semibold{overflow-wrap:anywhere;}\n" +
+            "#general-schedule .comrob-session-grid{margin:.65rem 0 0!important;--bs-gutter-x:0;--bs-gutter-y:.58rem;}\n" +
+            "#general-schedule .comrob-session-grid>[class*=col]{flex:0 0 100%!important;width:100%!important;max-width:100%!important;padding:0!important;}\n" +
+            "#general-schedule .comrob-room-btn{height:auto!important;min-height:0!important;padding:.9rem 1rem!important;}\n" +
+            "#general-schedule .comrob-room-btn .comrob-room-topic{font-size:1.04rem!important;line-height:1.38!important;}\n" +
+            "#general-schedule .comrob-room-btn .comrob-room-name{font-size:.89rem!important;}\n" +
+            "#general-schedule .comrob-paper-search-card .card-body{padding:1rem!important;}\n" +
+            "#general-schedule .comrob-paper-search-card .btn{white-space:normal;}\n" +
+            "#comrob-paper-search-modal .modal-dialog,.modal[id^=comrob-session-] .modal-dialog{margin:.55rem!important;max-width:calc(100% - 1.1rem)!important;}\n" +
+            "#comrob-paper-search-modal .modal-content,.modal[id^=comrob-session-] .modal-content{max-height:calc(100dvh - 1.1rem);overflow:hidden;}\n" +
+            "#comrob-paper-search-modal .modal-header,.modal[id^=comrob-session-] .modal-header{padding:.85rem 1rem;}\n" +
+            "#comrob-paper-search-modal .modal-body,.modal[id^=comrob-session-] .modal-body{padding:1rem!important;}\n" +
+            "#comrob-paper-search-modal .modal-footer,.modal[id^=comrob-session-] .modal-footer{padding:.7rem 1rem;}\n" +
+            ".comrob-paper-list>li{gap:.55rem;}\n" +
+            ".comrob-paper-number{flex-basis:2.65rem;}\n" +
+            "}\n";
+
         document.head.appendChild(style);
     }
 
@@ -441,7 +474,66 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Revisa actualizaciones del servidor sin que las personas deban forzar la recarga.
+    // Nginx entrega no-cache y ETag; las peticiones HEAD comparan versiones sin descargar HTML/JS.
+    function enableLiveUpdates() {
+        if (!window.fetch || !window.URL || !window.setInterval) return;
+        const isSchedule = Boolean(document.getElementById("general-schedule"));
+        const isHomepage = Boolean(document.getElementById("sponsors"));
+        // No recargar formularios de registro ni otras páginas con información escrita por el usuario.
+        if (!isSchedule && !isHomepage) return;
+        const scriptResource = new URL(scriptsUrl, document.baseURI);
+        const resources = [new URL(window.location.pathname, window.location.origin), scriptResource];
+        if (isSchedule) resources.push(new URL("comrob2026-ponencias.js", scriptResource));
+        if (isHomepage) resources.push(new URL("../assets/multion.svg", scriptResource));
+        resources.forEach(function (url) { url.search = ""; url.hash = ""; });
+
+        const knownVersions = new Map();
+        let checking = false;
+        let refreshing = false;
+        let lastCheck = 0;
+        async function checkForUpdates() {
+            if (checking || refreshing || document.hidden || Date.now() - lastCheck < 15000) return;
+            checking = true;
+            lastCheck = Date.now();
+            try {
+                for (const url of resources) {
+                    const response = await fetch(url.href, {
+                        method: "HEAD", cache: "no-store", credentials: "same-origin"
+                    });
+                    if (!response.ok) continue;
+                    const version = response.headers.get("ETag") ||
+                        [response.headers.get("Last-Modified"), response.headers.get("Content-Length")].join("|");
+                    if (!version || version === "|") continue;
+                    const previous = knownVersions.get(url.href);
+                    if (previous && previous !== version) {
+                        // No interrumpir al lector en mitad del buscador ni de un modal.
+                        if (document.querySelector(".modal.show")) return;
+                        refreshing = true;
+                        window.location.reload();
+                        return;
+                    }
+                    knownVersions.set(url.href, version);
+                }
+            } catch (error) {
+                // El sitio sigue funcionando si el usuario está temporalmente sin conexión.
+            } finally {
+                checking = false;
+            }
+        }
+        checkForUpdates();
+        window.setInterval(checkForUpdates, 120000);
+        window.addEventListener("focus", checkForUpdates);
+        document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) checkForUpdates();
+        });
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted) checkForUpdates();
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
+        enableLiveUpdates();
         updateQinLinTalk();
         if (document.getElementById("sponsors")) {
             addStyles();
