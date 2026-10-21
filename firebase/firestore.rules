@@ -42,7 +42,41 @@ service cloud.firestore {
                 && request.resource.data.participante.institucion.size() >= 2;
         }
 
-        function typeSpecificRegistrationIsValid() {
+        function knownWorkshop(id) {
+            return id in ["taller_madurez", "taller_fraccional", "taller_imu", "taller_matlab", "taller_ortega"];
+        }
+
+        function autoClosed(config) {
+            return config.bloqueoAutomatico && config.cupo > 0
+                && config.totalRegistros >= config.cupo + config.extras;
+        }
+
+        function workshopCounterIsUpdated(id, registroId) {
+            let before = get(/databases/$(database)/documents/talleresConfig/$(id)).data;
+            let after = getAfter(/databases/$(database)/documents/talleresConfig/$(id)).data;
+            return before.inicializado == true
+                && before.bloqueadoManual == false && !autoClosed(before)
+                && after.totalRegistros == before.totalRegistros + 1
+                && after.ultimoRegistroId == registroId
+                && after.bloqueadoAutomatico == autoClosed(after);
+        }
+
+        function validWorkshopSelection(registroId) {
+            let ids = request.resource.data.talleres;
+            return ids.toSet().size() == ids.size()
+                && ids.hasOnly(["taller_madurez", "taller_fraccional", "taller_imu", "taller_matlab", "taller_ortega"])
+                // Solo un taller del lunes; IMU y MATLAB también se empalman el martes.
+                && (("taller_madurez" in ids ? 1 : 0) + ("taller_fraccional" in ids ? 1 : 0) + ("taller_matlab" in ids ? 1 : 0)) <= 1
+                && !("taller_imu" in ids && "taller_matlab" in ids)
+                && !request.resource.data.keys().hasAny(["rechazosTalleres"])
+                && (!("taller_madurez" in ids) || workshopCounterIsUpdated("taller_madurez", registroId))
+                && (!("taller_fraccional" in ids) || workshopCounterIsUpdated("taller_fraccional", registroId))
+                && (!("taller_imu" in ids) || workshopCounterIsUpdated("taller_imu", registroId))
+                && (!("taller_matlab" in ids) || workshopCounterIsUpdated("taller_matlab", registroId))
+                && (!("taller_ortega" in ids) || workshopCounterIsUpdated("taller_ortega", registroId));
+        }
+
+        function typeSpecificRegistrationIsValid(registroId) {
             return (
                 request.resource.data.tipo == "poster"
                 && request.resource.data.poster is map
@@ -55,6 +89,7 @@ service cloud.firestore {
                 && request.resource.data.talleres.size() >= 1
                 && request.resource.data.talleres.size() <= 5
                 && request.resource.data.prioridad in [1, 2]
+                && validWorkshopSelection(registroId)
             )
             || (
                 request.resource.data.tipo == "futbot"
@@ -71,9 +106,49 @@ service cloud.firestore {
 
         match /registros/{registroId} {
             allow create: if commonRegistrationIsValid()
-                && typeSpecificRegistrationIsValid();
+                && typeSpecificRegistrationIsValid(registroId);
 
             allow read, update, delete: if isAdmin();
+        }
+
+        function validWorkshopConfig(data) {
+            return data.keys().hasOnly(["version", "inicializado", "cupo", "extras", "bloqueoAutomatico", "bloqueadoManual", "bloqueadoAutomatico", "totalRegistros", "ultimoRegistroId", "actualizadoEn", "actualizadoPor"])
+                && data.version == 1 && data.inicializado == true
+                && data.cupo is int && data.cupo >= 0 && data.cupo <= 100000
+                && data.extras is int && data.extras >= 0 && data.extras <= 100000
+                && data.totalRegistros is int && data.totalRegistros >= 0
+                && data.bloqueoAutomatico is bool && data.bloqueadoManual is bool
+                && (!data.bloqueoAutomatico || data.cupo > 0)
+                && data.bloqueadoAutomatico == autoClosed(data)
+                && data.ultimoRegistroId is string
+                && data.actualizadoEn == request.time;
+        }
+
+        function publicCounterUpdate(id) {
+            let next = request.resource.data;
+            let ref = /databases/$(database)/documents/registros/$(next.ultimoRegistroId);
+            let registration = getAfter(ref).data;
+            return signedIn() && knownWorkshop(id)
+                && resource.data.inicializado == true
+                && resource.data.bloqueadoManual == false && !autoClosed(resource.data)
+                && next.diff(resource.data).affectedKeys().hasOnly(["totalRegistros", "ultimoRegistroId", "bloqueadoAutomatico", "actualizadoEn"])
+                && next.totalRegistros == resource.data.totalRegistros + 1
+                && next.actualizadoEn == request.time
+                && next.bloqueadoAutomatico == autoClosed(next)
+                && !exists(ref)
+                && registration.tipo == "taller"
+                && registration.creadoPor == request.auth.uid
+                && registration.creadoEn == request.time
+                && id in registration.talleres;
+        }
+
+        // Solo configuración y conteos; nunca nombres, correos ni datos de participantes.
+        match /talleresConfig/{tallerId} {
+            allow read: if true;
+            allow create: if isAdmin() && knownWorkshop(tallerId) && validWorkshopConfig(request.resource.data);
+            allow update: if (isAdmin() && knownWorkshop(tallerId) && validWorkshopConfig(request.resource.data))
+                || publicCounterUpdate(tallerId);
+            allow delete: if false;
         }
 
         match /solicitudesAdmin/{uid} {

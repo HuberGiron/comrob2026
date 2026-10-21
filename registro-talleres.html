@@ -68,9 +68,9 @@
 <section class="bg-light py-5"><div class="container px-4"><div class="row justify-content-center"><div class="col-lg-9 col-xl-8">
 <div class="alert alert-danger d-none" data-error role="alert"></div>
 <div class="d-none mb-4" data-success></div>
-<form class="card shadow-sm border-0" data-registration-form data-registration-type="taller"><div class="card-body p-4 p-lg-5">
+<form class="card shadow-sm border-0" data-registration-form data-registration-type="taller" data-workshop-availability="loading"><div class="card-body p-4 p-lg-5">
 
-<div class="alert alert-info"><strong>Prioridad:</strong> los ponentes/presentadores de artículos del congreso tendrán prioridad en la asignación de lugares.</div>
+<div class="alert alert-info">Los lugares se asignan a los registros validados por orden de inscripción. Los validados que excedan el cupo quedan en lista de espera.</div>
 <h2 class="h4 mb-3">Datos del participante</h2>
 
 <div class="row g-3">
@@ -111,28 +111,29 @@
 <hr class="my-4"/>
 <h2 class="h4 mb-3">Selecciona tus talleres</h2>
 <p class="text-muted">Puedes seleccionar más de uno siempre que no exista conflicto de horario.</p>
+<p class="small" data-workshop-form-status role="status" aria-live="polite">Consultando disponibilidad…</p>
 <div class="form-check border rounded-3 p-3 ps-5 mb-2">
-<input class="form-check-input" data-name="El radar de la madurez tecnológica" data-schedule="Lunes 26 de octubre · 17:00–18:30" data-slots="2026-10-26T17:00" id="taller_madurez" name="talleres" type="checkbox" value="taller_madurez"/>
-<label class="form-check-label" for="taller_madurez"><span class="fw-semibold">El radar de la madurez tecnológica</span><br/><span class="small text-muted">Lunes 26 de octubre · 17:00–18:30</span></label>
+<input class="form-check-input" data-name="El radar de la madurez tecnológica" data-schedule="Lunes 26 de octubre · 17:00–18:30" data-slots="2026-10-26T17:00" id="taller_madurez" name="talleres" type="checkbox" value="taller_madurez" disabled/>
+<label class="form-check-label" for="taller_madurez"><span class="fw-semibold">El radar de la madurez tecnológica</span><br/><span class="small text-muted">Lunes 26 de octubre · 17:00–18:30</span><span class="d-block small mt-1" data-workshop-status="taller_madurez">Consultando disponibilidad…</span></label>
 </div>
 <div class="form-check border rounded-3 p-3 ps-5 mb-2">
-<input class="form-check-input" data-name="Robótica y cálculo fraccional" data-schedule="Lunes 26 de octubre · 17:00–18:30" data-slots="2026-10-26T17:00" id="taller_fraccional" name="talleres" type="checkbox" value="taller_fraccional"/>
-<label class="form-check-label" for="taller_fraccional"><span class="fw-semibold">Robótica y cálculo fraccional</span><br/><span class="small text-muted">Lunes 26 de octubre · 17:00–18:30</span></label>
+<input class="form-check-input" data-name="Robótica y cálculo fraccional" data-schedule="Lunes 26 de octubre · 17:00–18:30" data-slots="2026-10-26T17:00" id="taller_fraccional" name="talleres" type="checkbox" value="taller_fraccional" disabled/>
+<label class="form-check-label" for="taller_fraccional"><span class="fw-semibold">Robótica y cálculo fraccional</span><br/><span class="small text-muted">Lunes 26 de octubre · 17:00–18:30</span><span class="d-block small mt-1" data-workshop-status="taller_fraccional">Consultando disponibilidad…</span></label>
 </div>
 <div class="form-check border rounded-3 p-3 ps-5 mb-2">
-<input class="form-check-input" data-name="Captura de Movimiento con IMUs: Integración de Python y Unity para Avatares Virtuales" data-schedule="Martes 27 de octubre · 16:00–17:30" data-slots="2026-10-27T16:00" id="taller_imu" name="talleres" type="checkbox" value="taller_imu"/>
-<label class="form-check-label" for="taller_imu"><span class="fw-semibold">Captura de Movimiento con IMUs: Integración de Python y Unity para Avatares Virtuales</span><br/><span class="small text-muted">Martes 27 de octubre · 16:00–17:30</span></label>
+<input class="form-check-input" data-name="Captura de Movimiento con IMUs: Integración de Python y Unity para Avatares Virtuales" data-schedule="Martes 27 de octubre · 16:00–17:30" data-slots="2026-10-27T16:00" id="taller_imu" name="talleres" type="checkbox" value="taller_imu" disabled/>
+<label class="form-check-label" for="taller_imu"><span class="fw-semibold">Captura de Movimiento con IMUs: Integración de Python y Unity para Avatares Virtuales</span><br/><span class="small text-muted">Martes 27 de octubre · 16:00–17:30</span><span class="d-block small mt-1" data-workshop-status="taller_imu">Consultando disponibilidad…</span></label>
 </div>
 <div class="form-check border rounded-3 p-3 ps-5 mb-2">
-<input class="form-check-input" data-name="Modelado y simulación de robots quirúrgicos en MATLAB" data-schedule="26 de octubre · 17:00–18:30 y 27 de octubre · 16:00–17:30" data-slots="2026-10-26T17:00|2026-10-27T16:00" id="taller_matlab" name="talleres" type="checkbox" value="taller_matlab"/>
-<label class="form-check-label" for="taller_matlab"><span class="fw-semibold">Modelado y simulación de robots quirúrgicos en MATLAB</span><br/><span class="small text-muted">26 de octubre · 17:00–18:30 y 27 de octubre · 16:00–17:30</span></label>
+<input class="form-check-input" data-name="Modelado y simulación de robots quirúrgicos en MATLAB" data-schedule="26 de octubre · 17:00–18:30 y 27 de octubre · 16:00–17:30" data-slots="2026-10-26T17:00|2026-10-27T16:00" id="taller_matlab" name="talleres" type="checkbox" value="taller_matlab" disabled/>
+<label class="form-check-label" for="taller_matlab"><span class="fw-semibold">Modelado y simulación de robots quirúrgicos en MATLAB</span><br/><span class="small text-muted">26 de octubre · 17:00–18:30 y 27 de octubre · 16:00–17:30</span><span class="d-block small mt-1" data-workshop-status="taller_matlab">Consultando disponibilidad…</span></label>
 </div>
 <div class="form-check border rounded-3 p-3 ps-5 mb-2">
-<input class="form-check-input" data-name="Nuevos resultados sobre control no lineal de sistemas mecánicos" data-schedule="29 y 30 de octubre · Taller especial" data-slots="2026-10-29|2026-10-30" id="taller_ortega" name="talleres" type="checkbox" value="taller_ortega"/>
-<label class="form-check-label" for="taller_ortega"><span class="fw-semibold">Nuevos resultados sobre control no lineal de sistemas mecánicos</span><br/><span class="small text-muted">29 y 30 de octubre · Taller especial</span></label>
+<input class="form-check-input" data-name="Nuevos resultados sobre control no lineal de sistemas mecánicos" data-schedule="29 y 30 de octubre · Taller especial" data-slots="2026-10-29|2026-10-30" id="taller_ortega" name="talleres" type="checkbox" value="taller_ortega" disabled/>
+<label class="form-check-label" for="taller_ortega"><span class="fw-semibold">Nuevos resultados sobre control no lineal de sistemas mecánicos</span><br/><span class="small text-muted">29 y 30 de octubre · Taller especial</span><span class="d-block small mt-1" data-workshop-status="taller_ortega">Consultando disponibilidad…</span></label>
 </div>
 <div class="alert alert-light border mt-4">El registro quedará <strong>pendiente de validación</strong>. La confirmación se realizará después de revisar la información de pago y la disponibilidad de lugares.</div>
-<button class="btn btn-danger btn-lg" type="submit">Enviar registro</button>
+<button class="btn btn-danger btn-lg" type="submit" disabled>Enviar registro</button>
 
 </div></form>
 </div></div></div></section>
@@ -159,6 +160,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
-<script src="js/registro-publico.js" type="module"></script>
+<script src="js/registro-publico.js?v=20261020-talleres1" type="module"></script>
+<script type="module" src="js/talleres-publico.js?v=20261020-talleres1"></script>
 </body>
 </html>

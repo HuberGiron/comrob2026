@@ -9,6 +9,8 @@ import {
     db,
     ensurePublicUser
 } from "./firebase-core.js";
+import { createWorkshopRegistration } from "./talleres-datos.js";
+import { WORKSHOPS } from "./talleres-modelo.js";
 
 const form = document.querySelector("[data-registration-form]");
 
@@ -264,6 +266,7 @@ function showSuccess(code) {
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (form.dataset.saving === "true") return;
     clearError();
 
     if (!form.reportValidity()) {
@@ -271,6 +274,10 @@ form.addEventListener("submit", async (event) => {
     }
 
     const type = form.dataset.registrationType;
+    if (type === "taller" && form.dataset.workshopAvailability !== "ready") {
+        showError(language === "en" ? "Workshop registration is not available. Please check availability." : "El registro de talleres no está disponible. Consulta la disponibilidad.");
+        return;
+    }
     const participant = participantData();
 
     if (
@@ -329,6 +336,7 @@ form.addEventListener("submit", async (event) => {
         }
 
         submitButton.disabled = true;
+        form.dataset.saving = "true";
         submitButton.dataset.originalText = submitButton.textContent;
         submitButton.textContent = messages.saving;
 
@@ -352,13 +360,24 @@ form.addEventListener("submit", async (event) => {
             ...specificData
         };
 
-        await setDoc(documentReference, payload);
+        if (type === "taller") await createWorkshopRegistration(documentReference, payload);
+        else await setDoc(documentReference, payload);
         showSuccess(code);
     } catch (error) {
         console.error(error);
-        showError(error.message || messages.firebaseError);
+        if (error.code === "talleres/cerrado") {
+            const workshop = WORKSHOPS.find(item => item.id === error.workshopId);
+            showError(language === "en"
+                ? `Registration closed for ${workshop?.en || "this workshop"}. Please update your selection.`
+                : `Inscripciones cerradas para ${workshop?.nombre || "este taller"}. Actualiza tu selección.`);
+        } else if (type === "taller" && error.code) {
+            showError(language === "en"
+                ? "Your workshop registration could not be confirmed. Check availability and try again. No partial selection was saved."
+                : "No fue posible confirmar tu registro de talleres. Revisa la disponibilidad e intenta nuevamente. No se guardó una selección parcial.");
+        } else showError(error.message || messages.firebaseError);
     } finally {
-        submitButton.disabled = false;
+        form.dataset.saving = "false";
+        submitButton.disabled = type === "taller" && form.dataset.workshopAvailability !== "ready";
         submitButton.textContent =
             submitButton.dataset.originalText || messages.submit;
     }

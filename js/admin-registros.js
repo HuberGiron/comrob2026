@@ -17,6 +17,7 @@ import {
     logoutAdministrator,
     requireAdministrator
 } from "./admin-core.js";
+import { deleteWorkshopRegistration } from "./talleres-datos.js";
 
 let administrator = null;
 let allRecords = [];
@@ -359,9 +360,8 @@ async function removeRecord(record) {
         return;
     }
 
-    await deleteDoc(
-        doc(db, "registros", record.id)
-    );
+    if (record.tipo === "taller") await deleteWorkshopRegistration(record.id);
+    else await deleteDoc(doc(db, "registros", record.id));
 }
 
 tableBody.addEventListener("click", async (event) => {
