@@ -1,5 +1,6 @@
 /* Fuente: COMROB2026_programa_ponencias_depurado(1).xlsx.
- * 91 ponencias, 15 salas/bloque, sin horario individual por artículo.
+ * Actualización del comité: título del artículo 85 y retiro del artículo 97.
+ * 90 ponencias, 15 salas/bloque, sin horario individual por artículo.
  * Editar los datos en este archivo si el comité cambia la programación. */
 window.COMROB2026_PONENCIAS = [
   {
@@ -365,7 +366,7 @@ window.COMROB2026_PONENCIAS = [
     "room": "Ernesto Meneses Morales",
     "building": "S",
     "level": "Planta baja",
-    "topics": "Robótica Móvil, Autónoma y de Campo",
+    "topics": "Candidatos al Premio Rafael Kelly",
     "count": 6,
     "papers": [
       {
@@ -404,8 +405,7 @@ window.COMROB2026_PONENCIAS = [
         "topic": "Robótica Móvil, Autónoma y de Campo",
         "topicId": "T02"
       }
-    ],
-    "note": "Después del paper 69 aparece 'Rafael Kelly' sin función definida."
+    ]
   },
   {
     "id": "D2-S03",
@@ -462,7 +462,7 @@ window.COMROB2026_PONENCIAS = [
     "building": "E",
     "level": "Planta baja",
     "topics": "Percepción, Inteligencia e Interacción Humano-Robot",
-    "count": 5,
+    "count": 4,
     "papers": [
       {
         "id": 81,
@@ -478,7 +478,7 @@ window.COMROB2026_PONENCIAS = [
       },
       {
         "id": 85,
-        "title": "Adaptation of the control setpoint through the processing of electromyographic signals.",
+        "title": "Personalized Upper-Limb Haptic Guidance Through sEMG-Based Muscular Effort Optimization",
         "topic": "Percepción, Inteligencia e Interacción Humano-Robot",
         "topicId": "T05"
       },
@@ -487,15 +487,8 @@ window.COMROB2026_PONENCIAS = [
         "title": "Edge-AI and 6-DOF Robotic Manipulator for Greenhouse Crop Monitoring",
         "topic": "Percepción, Inteligencia e Interacción Humano-Robot",
         "topicId": "T05"
-      },
-      {
-        "id": 97,
-        "title": "An Interactive Emotional Interface System for Human Computer Interaction",
-        "topic": "Percepción, Inteligencia e Interacción Humano-Robot",
-        "topicId": "T05"
       }
-    ],
-    "note": "El PDF incluye nota especial: '*97 Dr. Antonio Marin'."
+    ]
   },
   {
     "id": "D2-S05",

@@ -33,6 +33,8 @@
 <li><a class="dropdown-item fs-5" href="index.html#keynote-speakers">Keynote Speakers</a></li>
 <li><a class="dropdown-item fs-5" href="cronograma.html">Schedule</a></li>
 <li><a class="dropdown-item fs-5" href="workshops.html">Workshops</a></li>
+
+<li><a class="dropdown-item fs-5" href="cronograma.html#mapa-ibero">IBERO Map</a></li>
 </ul>
 </li>
 
@@ -100,12 +102,13 @@
                 <p class="text-muted mb-3">University of Houston, United States</p>
                 <div class="bg-danger bg-opacity-10 border-start border-4 border-danger rounded-3 p-3">
                   <div class="small fw-semibold text-dark mb-1">Talk</div>
-                  <div class="fw-semibold text-danger">From Fiction to Function: Safe and Reliable Robotic Control under the Three Laws</div>
+                  <div class="fw-semibold text-danger">Bridging the Model-Reality Gap for Safe Robotic Autonomy</div>
                 </div>
               </div>
             </div>
 
-            <hr class="my-4">
+            <div class="small text-muted mb-4" data-keynote-location><i class="bi bi-calendar-event me-1" aria-hidden="true"></i>Tuesday, October 27 · 09:20 - 10:10<br/><i class="bi bi-geo-alt me-1" aria-hidden="true"></i>Auditorium Ignacio Ellacuría</div>
+<hr class="my-4">
 
             <h3 class="h4 mb-3">Biography</h3>
             <p>Prof. Qin Lin has been a tenure-track Assistant Professor in the Technology Division of the Cullen College of Engineering at the University of Houston since 2024. He completed his postdoctoral training at the Robotics Institute of Carnegie Mellon University, United States, in 2021, and earned his Ph.D. in Computer Science from Delft University of Technology, the Netherlands, in 2019.</p>
@@ -113,10 +116,8 @@
 <p>He serves as an Associate Editor for respected journals such as IEEE Robotics and Automation Letters and IEEE Transactions on Vehicular Technology. His research is currently supported by grants from the National Science Foundation (NSF) and the U.S. Department of Education.</p>
 
             <h3 class="h4 mt-5 mb-3">Abstract</h3>
-            <p>As robotic systems become increasingly prevalent in transportation, manufacturing, healthcare, and other domains, ensuring their safe and reliable operation under the three fundamental laws is critical, whether they are driven by traditional control algorithms or enhanced by artificial intelligence.</p>
-<p>This talk introduces a unified framework for disturbance rejection, which is foundational for safe and reliable robotic systems. The framework integrates control theory and machine learning to improve the dependability of robots operating in uncertain and dynamic environments.</p>
-<p>Although grounded in robotics and systems engineering, the implications extend beyond technical disciplines. By addressing how systems respond to unexpected events such as hardware failures or unpredictable environmental conditions, the work also engages with broader societal concerns about trust in autonomous systems, a key issue in AI and automation ethics and policy.</p>
-<p>Understanding and mitigating the limitations of AI and automation is essential for responsibly deploying these technologies in society.</p>
+<p>Autonomous robots must operate with models that are inevitably incomplete. Wind gusts, ground effects, modeling errors, unexpected contacts, and actuator faults can cause a robot’s behavior to depart from its predictions, sometimes with consequences for safety. Bridging this gap requires more than improving the model: robots must also detect what the model misses and respond appropriately. In this talk, I will examine three connected questions. First, when can an unknown disturbance be reconstructed from available measurements? I will discuss how system structure and sensing determine what an observer can recover. Second, how can learning improve disturbance prediction without making control fragile when conditions change? I will present Neural-ESO, which pairs a learned disturbance prior with online observer correction and provides robustness guarantees. Third, how can estimates of disturbances and their uncertainty guide safe control? I will show how disturbance-aware control can improve performance while accounting for safety constraints. Results in aerial robotics and robotic manipulation illustrate a common principle: reliable autonomy depends on knowing what the model misses, understanding what can be inferred from measurements, and using that knowledge to act safely.</p>
+
 
             <div class="mt-5 d-flex flex-wrap gap-2">
               <a class="btn btn-danger" href="index.html#keynote-speakers">Back to keynote speakers</a>
@@ -152,6 +153,6 @@ Copyright © COMRob 2026
 </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../js/scripts.js"></script>
+<script src="../js/comrob-cache-loader.js"></script>
 </body>
 </html>

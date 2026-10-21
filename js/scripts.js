@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
     programMenu.appendChild(item);
 });
 
-/* COMRob 2026: patrocinadores, ponencia de Qin Lin y programa de sesiones.
+/* COMRob 2026: patrocinadores y programa de sesiones.
  * Se aplica a las versiones ES/EN sin reemplazar el HTML de las demás secciones.
- * Los títulos y asignaciones de los 91 artículos proceden del Excel depurado.
+ * Los títulos y asignaciones de los 90 artículos proceden del Excel depurado.
  */
 (function () {
     "use strict";
@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
         posterior: "Poster Session", posterLocation: "Lobby of the Fernando Bustos Barrena Auditorium",
         kelly: "Rafael Kelly Award Session (parallel to Technical Sessions)",
         kellyTag: "Rafael Kelly Award Session",
+        kellyCandidates: "Rafael Kelly Award Candidates",
+        controlNote: "Given the high number of submissions on control, these papers are distributed across the three days and presented alongside other thematic tracks to accommodate all accepted contributions.",
         select: "Select a room to see its topic, location, paper numbers and titles.",
         level1: "Level 1", level2: "Level 2", basement: "Basement", ground: "Ground floor",
         mixed: "Mixed-topic session",
@@ -93,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
         posterior: "Sesión de pósteres", posterLocation: "Vestíbulo del Auditorio Fernando Bustos Barrena",
         kelly: "Sesión del Premio Rafael Kelly (en paralelo a las sesiones técnicas)",
         kellyTag: "Sesión del Premio Rafael Kelly",
+        kellyCandidates: "Candidatos al Premio Rafael Kelly",
+        controlNote: "Debido al elevado número de artículos recibidos en el área de control, su presentación se distribuye durante los tres días del congreso y se integra con los tracks de otras líneas temáticas, a fin de dar cabida a todas las contribuciones aceptadas.",
         select: "Selecciona una sala para consultar temática, ubicación, números y títulos de artículos.",
         level1: "Nivel 1", level2: "Nivel 2", basement: "Sótano", ground: "Planta baja",
         mixed: "Sesión de temática mixta",
@@ -103,12 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
         blockTime: "Horario del bloque", results: "resultados", moreResults: "Hay más resultados; especifica mejor tu búsqueda.",
         dayNames: ["Lunes 26 de octubre de 2026", "Martes 27 de octubre de 2026", "Miércoles 28 de octubre de 2026"]
     };
-    const newTitle = "Foundations of Disturbance Reconstructability, Learning, and Control for Safe Robotic Autonomy";
-    const oldTitles = [
-        "De la ficción a la función: control robótico seguro y confiable bajo las tres leyes",
-        "From Fiction to Function: Safe and Reliable Robotic Control under the Three Laws"
-    ];
-
     function escapeHtml(value) {
         return String(value).replace(/[&<>"']/g, function (character) {
             return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character];
@@ -149,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return isEnglish ? (englishTopics[paper.topicId] || paper.topic) : paper.topic;
     }
     function sessionTopics(session) {
+        if (isRafaelKellySession(session)) return [T.kellyCandidates];
         return Array.from(new Set(session.papers.map(paperTopic)));
     }
 
@@ -168,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ".comrob-room-btn:hover,.comrob-room-btn:focus-visible{background-color:#fff2f3;border-color:#b02a37;}\n" +
             ".comrob-room-btn .comrob-room-topic{font-size:.98rem;font-weight:700;line-height:1.25;color:#212529;}\n" +
             ".comrob-room-btn .comrob-room-name{font-size:.82rem;font-weight:400;line-height:1.3;color:#6c757d;}\n" +
+            ".comrob-control-note{font-size:.8rem;line-height:1.5;color:#737980;margin-top:1rem;}\n" +
             ".comrob-paper-list{counter-reset:none;padding-left:0;list-style:none;}\n" +
             ".comrob-paper-list>li{border-bottom:1px solid #e9ecef;padding:.7rem 0;display:flex;align-items:flex-start;gap:.8rem;}\n" +
             ".comrob-paper-list>li:last-child{border-bottom:0;}\n" +
@@ -241,14 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
         row.dataset.comrobSponsorsUpdated = "true";
     }
 
-    function updateQinLinTalk() {
-        // Solo los elementos con el título anterior: no altera semblanzas ni resúmenes.
-        document.querySelectorAll(".fw-semibold.text-danger").forEach(function (element) {
-            const original = element.textContent.trim();
-            if (oldTitles.includes(original)) element.textContent = newTitle;
-        });
-    }
-
     function technicalRows(root) {
         return Array.from(root.querySelectorAll("table tbody tr")).filter(function (row) {
             const cells = row.querySelectorAll("td");
@@ -308,14 +300,16 @@ document.addEventListener("DOMContentLoaded", function () {
             (isRafaelKellySession(session) ? '<div class="small fw-semibold text-danger border-start border-3 border-danger ps-2 mb-3"><i class="bi bi-award me-1" aria-hidden="true"></i>' + escapeHtml(T.kellyTag) + '</div>' : '') +
             '<h3 class="h6 fw-bold">' + escapeHtml(session.papers.length + ' ' + T.papers) + '</h3>' +
             '<ol class="comrob-paper-list">' + itemsHtml + '</ol>' +
-            '<p class="small text-muted mb-0">' + escapeHtml(T.exactTime) + '</p></div>' +
+            '<p class="small text-muted mb-0">' + escapeHtml(T.exactTime) + '</p>' +
+            (session.papers.some(p => p.topicId === "T01" || p.topicId === "T06") ?
+                '<p class="comrob-control-note mb-0" role="note">' + escapeHtml(T.controlNote) + '</p>' : '') + '</div>' +
             '<div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">' + escapeHtml(T.close) + '</button></div>' +
             '</div></div>';
         document.body.appendChild(modal);
         return modalId;
     }
 
-    // Consulta transversal del programa: 91 artículos, tres días, quince sesiones.
+    // Consulta transversal del programa: 90 artículos, tres días, quince sesiones.
     // La hora mostrada corresponde al bloque técnico, no a una ponencia individual.
     function createPaperSearch(root, sessions) {
         if (document.getElementById("comrob-paper-search-modal")) return;
@@ -534,7 +528,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("DOMContentLoaded", function () {
         enableLiveUpdates();
-        updateQinLinTalk();
         if (document.getElementById("sponsors")) {
             addStyles();
             updateSponsors();
