@@ -35,7 +35,7 @@ export function startScheduleClock() {
     const panel = document.querySelector("[data-schedule-clock]");
     if (!root || !panel || root.dataset.clockInitialized === "true") return;
     root.dataset.clockInitialized = "true";
-    panel.hidden = false;
+    // El resumen permanece oculto; el acceso flotante está fuera del panel.
     const en = document.documentElement.lang.toLowerCase().startsWith("en");
     const text = en ? { now: "Now", none: "No activities in progress." } :
         { now: "En curso", none: "Sin actividades en curso." };
