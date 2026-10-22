@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /* COMRob 2026: patrocinadores y programa de sesiones.
  * Se aplica a las versiones ES/EN sin reemplazar el HTML de las demás secciones.
- * Los títulos y asignaciones de los 90 artículos proceden del Excel depurado.
+ * Los títulos y asignaciones reflejan el Excel depurado y las actualizaciones del comité.
  */
 (function () {
     "use strict";
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return modalId;
     }
 
-    // Consulta transversal del programa: 90 artículos, tres días, quince sesiones.
+    // Consulta transversal del programa: tres días, quince sesiones.
     // La hora mostrada corresponde al bloque técnico, no a una ponencia individual.
     function createPaperSearch(root, sessions) {
         if (document.getElementById("comrob-paper-search-modal")) return;

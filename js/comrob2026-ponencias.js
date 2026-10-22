@@ -1,6 +1,6 @@
 /* Fuente: COMROB2026_programa_ponencias_depurado(1).xlsx.
- * Actualización del comité: título del artículo 85 y retiro del artículo 97.
- * 90 ponencias, 15 salas/bloque, sin horario individual por artículo.
+ * Actualizaciones del comité: título del artículo 85 y reincorporación del 97 el 27 de octubre.
+ * 91 ponencias, 15 salas/bloque, sin horario individual por artículo.
  * Editar los datos en este archivo si el comité cambia la programación. */
 window.COMROB2026_PONENCIAS = [
   {
@@ -462,7 +462,7 @@ window.COMROB2026_PONENCIAS = [
     "building": "E",
     "level": "Planta baja",
     "topics": "Percepción, Inteligencia e Interacción Humano-Robot",
-    "count": 4,
+    "count": 5,
     "papers": [
       {
         "id": 81,
@@ -485,6 +485,12 @@ window.COMROB2026_PONENCIAS = [
       {
         "id": 94,
         "title": "Edge-AI and 6-DOF Robotic Manipulator for Greenhouse Crop Monitoring",
+        "topic": "Percepción, Inteligencia e Interacción Humano-Robot",
+        "topicId": "T05"
+      },
+      {
+        "id": 97,
+        "title": "An Interactive Emotional Interface System for Human Computer Interaction",
         "topic": "Percepción, Inteligencia e Interacción Humano-Robot",
         "topicId": "T05"
       }
