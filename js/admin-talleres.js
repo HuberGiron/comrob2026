@@ -1,7 +1,7 @@
 import { collection, doc, onSnapshot, query, serverTimestamp, updateDoc, where } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { db } from "./firebase-core.js";
 import { logoutAdministrator, requireAdministrator } from "./admin-core.js";
-import { WORKSHOPS, ASSIGNMENT_LABELS, automaticClosure, buildRoster, defaultConfig, excelSafe, registrationClosed } from "./talleres-modelo.js";
+import { WORKSHOPS, ASSIGNMENT_LABELS, automaticClosure, buildRoster, defaultConfig, excelSafe, registrationClosed } from "./talleres-modelo.js?v=20261021-aulas1";
 import { initializeWorkshops, reconcileWorkshop, saveWorkshopConfig, setWorkshopRejection, watchWorkshopConfigs } from "./talleres-datos.js";
 
 const $ = id => document.getElementById(id);
@@ -35,11 +35,11 @@ function render() {
     $("exportGeneral").disabled = false;
     $("workshopCards").innerHTML = WORKSHOPS.map(w => {
         const {counts:c} = rosterFor(w.id), config = configFor(w.id);
-        return `<div class="col-12 col-md-6 col-xl-4"><article class="card h-100 shadow-sm ${w.id === selectedId ? "border-danger" : "border-0"}"><div class="card-body p-3 d-flex flex-column"><h2 class="h6 fw-bold mb-2">${safe(w.nombre)}</h2><div class="mb-3">${state(w.id)}</div><div class="row g-3 mb-3">${stat("Solicitudes",c.total)}${stat("Tentativas",c.pendientes)}${stat("Validados",c.validados)}${stat("Aceptados",c.aceptados)}${stat("En espera",c.espera)}${stat("Rechazados",c.rechazados)}</div><p class="small text-muted">Cupo: ${config.cupo || "sin límite"} · Extra: ${config.extras}</p><div class="d-flex flex-wrap gap-2 mt-auto"><button class="btn btn-sm btn-outline-danger" data-select="${w.id}">Ver inscritos y configurar</button><button class="btn btn-sm btn-outline-success" data-export="${w.id}">Exportar Excel</button></div></div></article></div>`;
+        return `<div class="col-12 col-md-6 col-xl-4"><article class="card h-100 shadow-sm ${w.id === selectedId ? "border-danger" : "border-0"}"><div class="card-body p-3 d-flex flex-column"><h2 class="h6 fw-bold mb-2">${safe(w.nombre)}</h2><p class="small text-muted mb-2">Aula ${safe(w.aula)} · Edificio ${safe(w.edificio)} · ${safe(w.nivel)}</p><div class="mb-3">${state(w.id)}</div><div class="row g-3 mb-3">${stat("Solicitudes",c.total)}${stat("Tentativas",c.pendientes)}${stat("Validados",c.validados)}${stat("Aceptados",c.aceptados)}${stat("En espera",c.espera)}${stat("Rechazados",c.rechazados)}</div><p class="small text-muted">Cupo: ${config.cupo || "sin límite"} · Extra: ${config.extras}</p><div class="d-flex flex-wrap gap-2 mt-auto"><button class="btn btn-sm btn-outline-danger" data-select="${w.id}">Ver inscritos y configurar</button><button class="btn btn-sm btn-outline-success" data-export="${w.id}">Exportar Excel</button></div></div></article></div>`;
     }).join("");
     $("workshopDetail").hidden = false;
     $("workshopTitle").textContent = selected().nombre;
-    $("workshopSchedule").textContent = selected().horario;
+    $("workshopSchedule").textContent = `${selected().horario} · Aula ${selected().aula} · Edificio ${selected().edificio} · ${selected().nivel}`;
     $("workshopState").innerHTML = state(selectedId);
     const configured = Boolean(configs[selectedId]?.inicializado);
     $("configFields").disabled = !configured;
@@ -90,7 +90,7 @@ async function operation(button, callback, success) {
 function exportRows(id) {
     return rosterFor(id).rows.map(row => {
         const r = row.record, p = r.participante || {};
-        return Object.fromEntries(Object.entries({ Taller:WORKSHOPS.find(w => w.id === id).nombre, TallerID:id, OrdenInscripcion:row.order, Codigo:r.codigoRegistro, Nombre:p.nombre, Correo:p.email, Institucion:p.institucion, Programa:p.programa, TipoParticipante:p.tipoParticipante, ArticuloID:p.articuloId || "", FechaInscripcion:date(r.creadoEn), Validacion:r.estado, FechaValidacion:date(r.validadoEn), Asignacion:ASSIGNMENT_LABELS[row.assignment], PosicionEspera:row.waitingPosition || "", MotivoRechazo:row.rejection?.motivo || "", CorreoRepetido:row.duplicate ? "Sí" : "No" }).map(([key,value]) => [key, typeof value === "number" ? value : excelSafe(value)]));
+        return Object.fromEntries(Object.entries({ Taller:WORKSHOPS.find(w => w.id === id).nombre, TallerID:id, Aula:WORKSHOPS.find(w => w.id === id).aula, Edificio:WORKSHOPS.find(w => w.id === id).edificio, Nivel:WORKSHOPS.find(w => w.id === id).nivel, Horario:WORKSHOPS.find(w => w.id === id).horario, OrdenInscripcion:row.order, Codigo:r.codigoRegistro, Nombre:p.nombre, Correo:p.email, Institucion:p.institucion, Programa:p.programa, TipoParticipante:p.tipoParticipante, ArticuloID:p.articuloId || "", FechaInscripcion:date(r.creadoEn), Validacion:r.estado, FechaValidacion:date(r.validadoEn), Asignacion:ASSIGNMENT_LABELS[row.assignment], PosicionEspera:row.waitingPosition || "", MotivoRechazo:row.rejection?.motivo || "", CorreoRepetido:row.duplicate ? "Sí" : "No" }).map(([key,value]) => [key, typeof value === "number" ? value : excelSafe(value)]));
     });
 }
 function exportReport(ids) {
@@ -98,7 +98,7 @@ function exportReport(ids) {
     if (!XLSX) { notice("No fue posible cargar la librería Excel. Recarga la página e intenta nuevamente.",true); return; }
     const workbook = XLSX.utils.book_new();
     const add = (name,rows) => { const sheet = XLSX.utils.json_to_sheet(rows.length ? rows : [{SinRegistros:"No hay registros"}]); sheet["!cols"] = Object.keys(rows[0] || {}).map(key => ({wch: /Nombre|Taller|Correo|Institucion|Motivo/.test(key) ? 42 : 22})); XLSX.utils.book_append_sheet(workbook,sheet,name); };
-    add("Resumen",ids.map(id => { const c=rosterFor(id).counts, cfg=configFor(id); return { Taller:WORKSHOPS.find(w=>w.id===id).nombre, Cupo:cfg.cupo || "Sin límite", Extra:cfg.extras, Solicitudes:c.total, Tentativas:c.pendientes, Validados:c.validados, Aceptados:c.aceptados, EnEspera:c.espera, Rechazados:c.rechazados, BloqueoManual:cfg.bloqueadoManual?"Sí":"No", CierreAutomatico:cfg.bloqueoAutomatico?"Sí":"No", Inscripciones:configs[id] ? (registrationClosed(cfg)?"Cerradas":"Abiertas") : "Sin inicializar" }; }));
+    add("Resumen",ids.map(id => { const c=rosterFor(id).counts, cfg=configFor(id); return { Taller:WORKSHOPS.find(w=>w.id===id).nombre, Aula:WORKSHOPS.find(w=>w.id===id).aula, Edificio:WORKSHOPS.find(w=>w.id===id).edificio, Cupo:cfg.cupo || "Sin límite", Extra:cfg.extras, Solicitudes:c.total, Tentativas:c.pendientes, Validados:c.validados, Aceptados:c.aceptados, EnEspera:c.espera, Rechazados:c.rechazados, BloqueoManual:cfg.bloqueadoManual?"Sí":"No", CierreAutomatico:cfg.bloqueoAutomatico?"Sí":"No", Inscripciones:configs[id] ? (registrationClosed(cfg)?"Cerradas":"Abiertas") : "Sin inicializar" }; }));
     const rows = ids.flatMap(exportRows);
     add("Todos",rows);
     for (const [key,name] of Object.entries({aceptado:"Aceptados",espera:"Lista de espera",pendiente:"Pendientes",rechazado:"Rechazados"})) add(name,rows.filter(row=>row.Asignacion===ASSIGNMENT_LABELS[key]));
