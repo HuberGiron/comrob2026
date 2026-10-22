@@ -1,0 +1,20 @@
+.comrob-live-panel .comrob-cdmx-time { font-size:1.5rem; font-weight:700; font-variant-numeric:tabular-nums; }
+.comrob-live-panel .comrob-live-date { font-size:.85rem; color:#6c757d; }
+.comrob-current-label { display:inline-block; margin:.35rem 0 0 .5rem; padding:.28rem .55rem; border-radius:.4rem; background:#b02a37; color:#fff; font-size:.75rem; font-weight:700; line-height:1.25; vertical-align:middle; white-space:nowrap; }
+#general-schedule td>.comrob-current-label { display:table; margin-left:0; }
+.comrob-current-label[hidden], .comrob-now-shortcut[hidden] { display:none!important; }
+#general-schedule tr.comrob-is-current { background:#fff1f3; outline:2px solid #b02a37; outline-offset:-2px; scroll-margin-top:1.25rem; }
+#general-schedule table.table tbody>tr.comrob-is-current>td { --bs-table-bg:#fff1f3; --bs-table-accent-bg:#fff1f3; background-color:#fff1f3!important; }
+#general-schedule table.table tbody>tr.comrob-is-current>td:first-child { color:#941b2c!important; }
+#general-schedule .comrob-is-current .comrob-room-btn { background:#fff7f8; border-color:#d88c96!important; }
+#general-schedule .card.comrob-is-current { border-color:#b02a37!important; background:#fff1f3; box-shadow:0 0 0 2px #b02a37!important; scroll-margin-top:1.25rem; }
+#general-schedule .card.comrob-is-current>.card-header { background:#b02a37!important; }
+#general-schedule .card.comrob-is-current>.card-header .comrob-current-label { background:#fff; color:#941b2c; }
+.comrob-now-shortcut { position:fixed; right:1rem; bottom:1rem; z-index:1020; max-width:calc(100vw - 2rem); white-space:normal; box-shadow:0 .3rem 1rem #0003; }
+body.modal-open .comrob-now-shortcut { display:none; }
+@media(max-width:767.98px) {
+    #general-schedule .table tbody>tr.comrob-is-current { background:#fff1f3; }
+    #general-schedule table.table tbody>tr.comrob-is-current>td:first-child { background:#f8d7dc!important; }
+    .comrob-now-shortcut { font-size:.85rem; padding:.6rem .9rem; }
+    #general-schedule td>.comrob-current-label { display:inline-block; margin:0 0 0 .5rem; }
+}
