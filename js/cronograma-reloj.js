@@ -37,19 +37,14 @@ export function startScheduleClock() {
     root.dataset.clockInitialized = "true";
     panel.hidden = false;
     const en = document.documentElement.lang.toLowerCase().startsWith("en");
-    const text = en ? {
-        now: "Now", none: "There are no scheduled activities at this time.",
-        parallel: count => `${count} activities taking place now`
-    } : {
-        now: "En curso", none: "En este momento no hay actividades programadas.",
-        parallel: count => `${count} actividades simultáneas en curso`
-    };
+    const text = en ? { now: "Now", none: "No activities in progress." } :
+        { now: "En curso", none: "Sin actividades en curso." };
     const clock = panel.querySelector("[data-cdmx-time]");
     const date = panel.querySelector("[data-cdmx-date]");
     const summary = panel.querySelector("[data-schedule-summary]");
     const shortcut = document.querySelector("[data-current-activity]");
     const dateFormatter = new Intl.DateTimeFormat(en ? "en-US" : "es-MX", {
-        timeZone: "America/Mexico_City", weekday: "long", year: "numeric", month: "long", day: "numeric"
+        timeZone: "America/Mexico_City", weekday: "long", month: "long", day: "numeric"
     });
     const entries = [...root.querySelectorAll("[data-schedule-start], [data-schedule-ranges]")].map((element, index) => {
         let ranges;
@@ -72,6 +67,45 @@ export function startScheduleClock() {
     let following = !window.location.hash || window.location.hash === "#actividad-en-curso";
     const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+    function describe(entry) {
+        const element = entry.element;
+        const content = element.tagName === "TR" ? element.cells[1] : element.querySelector(".card-body");
+        const title = content?.querySelector(":scope > .fw-semibold.mb-1:not(.small), :scope > h3")?.textContent.trim();
+        const name = element.dataset.scheduleLabel || "";
+        const locations = [...(content?.querySelectorAll(".bi-geo-alt") || [])].map(icon => {
+            const place = icon.parentElement.textContent.trim();
+            const room = icon.closest("button.comrob-room-btn")?.querySelector(".comrob-room-name")?.textContent.trim();
+            return room ? `${room} · ${place}` : place;
+        });
+        return {
+            name: title && title !== name ? `${name} · ${title}` : name,
+            location: element.dataset.scheduleLocation || [...new Set(locations)].join("; ")
+        };
+    }
+    function renderSummary(details) {
+        summary.replaceChildren();
+        summary.classList.toggle("comrob-live-empty", !details.length);
+        if (!details.length) { summary.textContent = text.none; return; }
+        details.forEach(detail => {
+            const item = document.createElement("div");
+            item.className = "comrob-current-item";
+            const line = document.createElement("div");
+            const prefix = document.createElement("span");
+            prefix.className = "fw-semibold";
+            prefix.textContent = `${text.now}: `;
+            const name = document.createElement("span");
+            name.textContent = detail.name;
+            line.append(prefix, name);
+            item.appendChild(line);
+            if (detail.location) {
+                const location = document.createElement("div");
+                location.className = "comrob-current-location";
+                location.textContent = detail.location;
+                item.appendChild(location);
+            }
+            summary.appendChild(item);
+        });
+    }
     function scrollToCurrent(manual = false) {
         if (!active.length || (!manual && !following) || document.querySelector(".modal.show")) return;
         active[0].element.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
@@ -89,11 +123,13 @@ export function startScheduleClock() {
         if (document.hidden) return;
         const instant = new Date();
         const local = mexicoCityTime(instant);
-        clock.textContent = local.clock;
+        clock.textContent = local.clock.slice(0, 5);
         clock.dateTime = instant.toISOString();
         date.textContent = dateFormatter.format(instant);
         const next = currentEntries(entries, instant);
-        const key = next.map(entry => entry.index).join(",");
+        // Leer los datos de la actividad ya publicada, también tras cargar las salas.
+        const details = next.map(describe);
+        const key = JSON.stringify(next.map((entry, index) => [entry.index, details[index]]));
         if (key === activeKey) return;
         activeKey = key;
         active = next;
@@ -105,8 +141,7 @@ export function startScheduleClock() {
             else entry.element.removeAttribute("aria-current");
         });
         shortcut.hidden = !active.length;
-        summary.textContent = !active.length ? text.none : active.length > 1 ? text.parallel(active.length) :
-            `${text.now}: ${active[0].element.dataset.scheduleLabel || ""}`;
+        renderSummary(details);
         queueScroll();
     }
     function pauseFollowing() { following = false; }

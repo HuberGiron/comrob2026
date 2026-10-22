@@ -1,5 +1,9 @@
-.comrob-live-panel .comrob-cdmx-time { font-size:1.5rem; font-weight:700; font-variant-numeric:tabular-nums; }
-.comrob-live-panel .comrob-live-date { font-size:.85rem; color:#6c757d; }
+.comrob-live-panel { padding:.85rem 1rem; border:1px solid #e5e7eb; border-radius:.6rem; background:#fff; font-size:.9rem; line-height:1.45; }
+.comrob-live-panel .comrob-live-meta { display:flex; align-items:baseline; gap:.45rem; margin-bottom:.35rem; color:#6c757d; font-size:.85rem; white-space:nowrap; }
+.comrob-live-panel .comrob-cdmx-time { font-size:inherit; font-weight:500; font-variant-numeric:tabular-nums; }
+.comrob-current-item+.comrob-current-item { margin-top:.5rem; }
+.comrob-current-location, .comrob-live-empty { color:#6c757d; font-size:.85rem; }
+.comrob-current-location { margin-top:.1rem; }
 .comrob-current-label { display:inline-block; margin:.35rem 0 0 .5rem; padding:.28rem .55rem; border-radius:.4rem; background:#b02a37; color:#fff; font-size:.75rem; font-weight:700; line-height:1.25; vertical-align:middle; white-space:nowrap; }
 #general-schedule td>.comrob-current-label { display:table; margin-left:0; }
 .comrob-current-label[hidden], .comrob-now-shortcut[hidden] { display:none!important; }
