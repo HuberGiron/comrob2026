@@ -27,7 +27,8 @@ export function rangeIsCurrent(range, localTime) {
 
 export function currentEntries(entries, instant = new Date()) {
     const time = mexicoCityTime(instant);
-    return entries.filter(entry => entry.ranges.some(range => rangeIsCurrent(range, time)));
+    return entries.filter(entry => entry.element?.dataset.scheduleCancelled !== "true" &&
+        entry.ranges.some(range => rangeIsCurrent(range, time)));
 }
 
 export function startScheduleClock() {
@@ -73,6 +74,8 @@ export function startScheduleClock() {
         const title = content?.querySelector(":scope > .fw-semibold.mb-1:not(.small), :scope > h3")?.textContent.trim();
         const name = element.dataset.scheduleLabel || "";
         const locations = [...(content?.querySelectorAll(".bi-geo-alt") || [])].map(icon => {
+            const mapped = icon.closest("[data-map-location]")?.dataset?.mapLocation;
+            if (mapped) return mapped;
             const place = icon.parentElement.textContent.trim();
             const room = icon.closest("button.comrob-room-btn")?.querySelector(".comrob-room-name")?.textContent.trim();
             return room ? `${room} · ${place}` : place;
@@ -107,7 +110,8 @@ export function startScheduleClock() {
         });
     }
     function scrollToCurrent(manual = false) {
-        if (!active.length || (!manual && !following) || document.querySelector(".modal.show")) return;
+        if (!active.length || (!manual && !following) || document.querySelector(".modal.show") ||
+            document.querySelector("[data-map-navigation]:not([hidden])")) return;
         active[0].element.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
     }
     function queueScroll() {
@@ -142,9 +146,13 @@ export function startScheduleClock() {
         });
         shortcut.hidden = !active.length;
         renderSummary(details);
+        // El mapa consume las mismas actividades que colorea el cronograma.
+        root.comrobCurrentEntries = next.map(entry => entry.element);
+        window.dispatchEvent(new CustomEvent("comrob:schedule-current", { detail: root.comrobCurrentEntries }));
         queueScroll();
     }
     function pauseFollowing() { following = false; }
+    window.addEventListener("comrob:map-open", pauseFollowing);
     window.addEventListener("wheel", pauseFollowing, { passive: true });
     window.addEventListener("touchmove", pauseFollowing, { passive: true });
     window.addEventListener("keydown", event => {

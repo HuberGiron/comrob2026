@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
             '<div class="small text-white-50">' + escapeHtml(T.session + ' · ' + session.date + ' · ' + session.start + '–' + session.end) + '</div>' +
             '<h2 class="modal-title h5 mb-0" id="' + modalId + '-title">' + escapeHtml(auditoriumName(session)) + '</h2>' +
             '</div><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="' + escapeHtml(T.close) + '"></button></div>' +
-            '<div class="modal-body px-4 py-3"><div class="small text-muted mb-2"><strong>' + escapeHtml(T.location) + ':</strong> ' + escapeHtml(roomLocation(session)) + '</div>' +
+            '<div class="modal-body px-4 py-3"><div class="small text-muted mb-2" data-map-location="' + escapeHtml(auditoriumName(session) + ' · ' + roomLocation(session)) + '" data-map-context="' + escapeHtml(topics.join(' / ')) + '"><i class="bi bi-geo-alt me-1" aria-hidden="true"></i><strong>' + escapeHtml(T.location) + ':</strong> ' + escapeHtml(roomLocation(session)) + '</div>' +
             '<div class="mb-3"><strong>' + escapeHtml(topicLabel) + ':</strong> ' + escapeHtml(topics.join(' / ')) + '</div>' +
             (isRafaelKellySession(session) ? '<div class="small fw-semibold text-danger border-start border-3 border-danger ps-2 mb-3"><i class="bi bi-award me-1" aria-hidden="true"></i>' + escapeHtml(T.kellyTag) + '</div>' : '') +
             '<h3 class="h6 fw-bold">' + escapeHtml(session.papers.length + ' ' + T.papers) + '</h3>' +
@@ -400,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     escapeHtml(T.blockTime) + ':</strong> ' + escapeHtml(session.start + '–' + session.end) + '</div>' +
                     '<div class="mb-1"><i class="bi bi-door-open text-danger me-2" aria-hidden="true"></i><strong>' +
                     escapeHtml(T.room) + ':</strong> ' + escapeHtml(auditoriumName(session)) + '</div>' +
-                    '<div class="text-muted"><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>' +
+                    '<div class="text-muted" data-map-location="' + escapeHtml(auditoriumName(session) + ' · ' + roomLocation(session)) + '" data-map-context="' + escapeHtml(p.title) + '"><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>' +
                     escapeHtml(roomLocation(session)) + '</div></div></article>';
             }).join("");
         }
@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.innerHTML = '<span class="d-block comrob-room-topic mb-1">' + escapeHtml(topicNames) + '</span>' +
                     '<span class="d-block text-muted comrob-room-name mb-1">' + escapeHtml(auditoriumName(session)) + '</span>' +
                     (isRafaelKellySession(session) ? '<span class="d-block small fw-semibold text-danger mb-1"><i class="bi bi-award me-1" aria-hidden="true"></i>' + escapeHtml(T.kellyTag) + '</span>' : '') +
-                    '<span class="d-block comrob-location-line mb-1"><i class="bi bi-geo-alt" aria-hidden="true"></i> ' + escapeHtml(roomLocation(session)) + '</span>' +
+                    '<span class="d-block comrob-location-line mb-1" data-map-location="' + escapeHtml(auditoriumName(session) + ' · ' + roomLocation(session)) + '" data-map-context="' + escapeHtml(topicNames) + '"><i class="bi bi-geo-alt" aria-hidden="true"></i> ' + escapeHtml(roomLocation(session)) + '</span>' +
                     '<span class="d-block small fw-semibold text-danger">' + session.papers.length + ' ' + escapeHtml(T.papers) + ' · ' + escapeHtml(T.information) + ' <i class="bi bi-chevron-right" aria-hidden="true"></i></span>';
                 col.appendChild(btn);
                 grid.appendChild(col);
@@ -502,7 +502,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const previous = knownVersions.get(url.href);
                     if (previous && previous !== version) {
                         // No interrumpir al lector en mitad del buscador ni de un modal.
-                        if (document.querySelector(".modal.show")) return;
+                        if (document.querySelector(".modal.show") || document.querySelector("[data-map-navigation]:not([hidden])")) return;
                         refreshing = true;
                         window.location.reload();
                         return;

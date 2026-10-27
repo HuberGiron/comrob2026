@@ -1,0 +1,25 @@
+.comrob-map-link { display:inline-flex; align-items:center; justify-content:center; position:relative; z-index:2; width:1.75rem; height:1.75rem; margin:-.15rem .2rem -.15rem -.2rem; vertical-align:middle; color:#b02a37; border-radius:50%; text-decoration:none; }
+.comrob-map-link>i { margin:0!important; }
+.comrob-map-link:hover { background:#fce8eb; color:#941b2c; }
+.comrob-map-link:focus-visible { outline:2px solid #b02a37; outline-offset:2px; background:#fce8eb; }
+.comrob-room-primary { display:block; width:100%; padding:0; border:0; background:none; color:inherit; font:inherit; text-align:inherit; text-decoration:none; }
+.comrob-room-primary:hover { color:inherit; }
+.comrob-map-card:focus-within { outline:2px solid #b02a37; outline-offset:2px; }
+.comrob-map-panel { position:fixed; right:1rem; bottom:1rem; z-index:1030; display:flex; flex-direction:column; width:22rem; max-width:calc(100vw - 2rem); max-height:50vh; padding:1rem; border:1px solid #e5e7eb; border-radius:.75rem; background:#fff; box-shadow:0 .4rem 1.5rem #0003; line-height:1.4; }
+.comrob-map-panel[hidden] { display:none!important; }
+.comrob-map-close { position:absolute; top:.5rem; right:.5rem; width:1rem; height:1rem; padding:.5rem; }
+.comrob-map-panel-content { min-height:0; overflow-y:auto; }
+.comrob-map-caption { margin-bottom:.35rem; padding-right:2rem; font-size:.75rem; color:#6c757d; }
+.comrob-map-place { font-size:.9rem; font-weight:600; overflow-wrap:anywhere; }
+.comrob-map-context { margin:.35rem 0 .65rem; font-size:.8rem; color:#6c757d; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; }
+.comrob-map-context[hidden] { display:none; }
+.comrob-map-panel .btn { flex-shrink:0; margin-top:.65rem; font-size:.85rem; }
+.comrob-map-panel [hidden] { display:none!important; }
+.comrob-map-now-caption { color:#b02a37; font-weight:700; }
+.comrob-map-now-item+.comrob-map-now-item { margin-top:.65rem; padding-top:.65rem; border-top:1px solid #f0f0f0; }
+.comrob-map-now-name { font-size:.87rem; font-weight:600; overflow-wrap:anywhere; }
+.comrob-map-now-location { margin-top:.2rem; font-size:.8rem; color:#6c757d; overflow-wrap:anywhere; }
+.comrob-map-has-both [data-map-requested] { margin-top:.85rem; padding-top:.85rem; border-top:1px solid #e5e7eb; }
+.comrob-map-open .comrob-now-shortcut { display:none!important; }
+#mapa-ibero .comrob-map-selected { box-shadow:0 0 0 2px #b02a37!important; }
+@media(max-width:767.98px) { .comrob-map-panel { right:.75rem; bottom:.75rem; max-width:calc(100vw - 1.5rem); padding:.85rem; } }
