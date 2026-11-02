@@ -77,9 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
         select: "Select a room to see its topic, location, paper numbers and titles.",
         level1: "Level 1", level2: "Level 2", basement: "Basement", ground: "Ground floor",
         mixed: "Mixed-topic session",
-        findPaper: "Find a paper", searchHint: "Search by paper number or title to find its schedule and auditorium.",
-        searchInput: "Paper number or title", searchPlaceholder: "E.g. #57 or robot control",
-        searchInstructions: "Enter a paper number or words from its title.",
+        findPaper: "Find a paper", searchHint: "Search by paper ID, title or author to find the schedule and presentation certificate.",
+        searchInput: "Paper ID, title or author", searchPlaceholder: "E.g. #57 or robot control",
+        searchInstructions: "Enter a paper ID, words from its title or an author's name.",
+        certificate: "Open certificate (PDF)", certificateTab: "Opens in a new tab",
+        certificatePending: "Certificate not yet published.",
         noResults: "No papers found. Try a different number or title.",
         blockTime: "Session time", results: "matches", moreResults: "More results are available; refine your search.",
         dayNames: ["Monday, October 26, 2026", "Tuesday, October 27, 2026", "Wednesday, October 28, 2026"]
@@ -100,9 +102,11 @@ document.addEventListener("DOMContentLoaded", function () {
         select: "Selecciona una sala para consultar temática, ubicación, números y títulos de artículos.",
         level1: "Nivel 1", level2: "Nivel 2", basement: "Sótano", ground: "Planta baja",
         mixed: "Sesión de temática mixta",
-        findPaper: "Buscar artículo", searchHint: "Consulta el día, horario y auditorio buscando por número o título.",
-        searchInput: "Número o título del artículo", searchPlaceholder: "Ej. #57 o control de robots",
-        searchInstructions: "Escribe el número del artículo o palabras de su título.",
+        findPaper: "Buscar artículo", searchHint: "Busca por ID, título o autor para consultar el programa y tu reconocimiento de presentación.",
+        searchInput: "ID, título o autor del artículo", searchPlaceholder: "Ej. #57 o control de robots",
+        searchInstructions: "Escribe el ID del artículo, palabras de su título o el nombre de un autor.",
+        certificate: "Abrir reconocimiento (PDF)", certificateTab: "Se abre en una pestaña nueva",
+        certificatePending: "Reconocimiento pendiente de publicación.",
         noResults: "No se encontraron artículos. Prueba con otro número o título.",
         blockTime: "Horario del bloque", results: "resultados", moreResults: "Hay más resultados; especifica mejor tu búsqueda.",
         dayNames: ["Lunes 26 de octubre de 2026", "Martes 27 de octubre de 2026", "Miércoles 28 de octubre de 2026"]
@@ -309,6 +313,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return modalId;
     }
 
+    function certificateAction(paper) {
+        const certificate = window.COMROB_CERTIFICADOS?.get(paper.id);
+        if (!certificate) return '<span class="small text-muted">' + escapeHtml(T.certificatePending) + '</span>';
+        return '<a class="btn btn-outline-danger btn-sm" href="' + escapeHtml(certificate.url) +
+            '" target="_blank" rel="noopener noreferrer" aria-label="' +
+            escapeHtml(T.certificate + ': #' + paper.id + '. ' + T.certificateTab) + '">' +
+            '<i class="bi bi-file-earmark-pdf me-1" aria-hidden="true"></i>' + escapeHtml(T.certificate) +
+            '<i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i></a>';
+    }
+
     // Consulta transversal del programa: tres días, quince sesiones.
     // La hora mostrada corresponde al bloque técnico, no a una ponencia individual.
     function createPaperSearch(root, sessions) {
@@ -377,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // #7, 007, "artículo 7" y "paper 7" buscan el número exacto.
             const numberMatch = /^(?:(?:articulo|paper|numero|no)\s*)?#?\s*0*(\d+)$/.exec(query);
             const words = query.split(/\s+/).filter(Boolean);
-            const matches = papers.filter(function (entry) {
+            const matches = window.COMROB_CERTIFICADOS ? window.COMROB_CERTIFICADOS.search(sessions, input.value) : papers.filter(function (entry) {
                 if (numberMatch) return Number(entry.paper.id) === Number(numberMatch[1]);
                 const title = normalize(entry.paper.title);
                 return words.every(function (word) { return title.includes(word); });
@@ -389,10 +403,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const p = entry.paper;
                 const session = entry.session;
                 const day = T.dayNames[session.day - 1] || session.date;
+                const certificate = window.COMROB_CERTIFICADOS?.get(p.id);
+                const title = certificate ? '<a class="link-dark" href="' + escapeHtml(certificate.url) +
+                    '" target="_blank" rel="noopener noreferrer" title="' + escapeHtml(T.certificateTab) + '">' +
+                    escapeHtml(p.title) + '</a>' : escapeHtml(p.title);
                 return '<article class="comrob-search-result">' +
                     '<div class="d-flex align-items-start gap-2 mb-2"><span class="badge bg-danger flex-shrink-0">#' +
                     escapeHtml(p.id) + '</span><span class="fw-semibold comrob-search-paper-title">' +
-                    escapeHtml(p.title) + '</span></div>' +
+                    title + '</span></div>' +
                     '<div class="comrob-search-details ms-1">' +
                     '<div class="mb-1"><i class="bi bi-calendar-event text-danger me-2" aria-hidden="true"></i>' +
                     escapeHtml(day) + '</div>' +
@@ -401,8 +419,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     '<div class="mb-1"><i class="bi bi-door-open text-danger me-2" aria-hidden="true"></i><strong>' +
                     escapeHtml(T.room) + ':</strong> ' + escapeHtml(auditoriumName(session)) + '</div>' +
                     '<div class="text-muted" data-map-location="' + escapeHtml(auditoriumName(session) + ' · ' + roomLocation(session)) + '" data-map-context="' + escapeHtml(p.title) + '"><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>' +
-                    escapeHtml(roomLocation(session)) + '</div></div></article>';
+                    escapeHtml(roomLocation(session)) + '</div></div>' +
+                    (window.COMROB_CERTIFICADOS ? '<div class="mt-3" data-certificate-id="' + escapeHtml(p.id) + '">' +
+                        certificateAction(p) + '</div>' : '') + '</article>';
             }).join("");
+            if (window.COMROB_CERTIFICADOS) visible.forEach(function (entry) {
+                if (window.COMROB_CERTIFICADOS.get(entry.paper.id)) return;
+                const slot = resultList.querySelector('[data-certificate-id="' + entry.paper.id + '"]');
+                window.COMROB_CERTIFICADOS.check(entry.paper.id).then(function () {
+                    if (slot?.isConnected) slot.innerHTML = certificateAction(entry.paper);
+                });
+            });
         }
         input.addEventListener("input", updateResults);
         modal.addEventListener("shown.bs.modal", function () { input.focus(); input.select(); });
